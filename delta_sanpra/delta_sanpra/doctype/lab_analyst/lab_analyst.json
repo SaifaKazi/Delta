@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "format:{document_id}",
+ "autoname": "format:{inward_number}/{document_id}",
  "creation": "2025-11-10 12:28:34.474760",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -9,13 +9,19 @@
   "section_break_ykf0",
   "date",
   "inward_number",
+  "heat_number",
+  "equipment",
+  "sensitization_treatement",
   "column_break_xegu",
   "test_group",
   "test_method",
   "material_specification",
+  "location_of_test",
+  "sensitization_treatement_options",
+  "case_depth",
   "column_break_ixns",
+  "mrn",
   "material_shape",
-  "heat_number",
   "customer_requirment",
   "challan_no",
   "customer_name",
@@ -24,6 +30,30 @@
   "witness",
   "is_print",
   "discipline",
+  "room_tempc",
+  "other_information",
+  "section_break_wypy",
+  "name_of_instrument",
+  "column_break_yxct",
+  "model",
+  "column_break_vpgn",
+  "calibration_date",
+  "column_break_dkhm",
+  "brandmake",
+  "section_break_yhdo",
+  "type_of_grain_determined",
+  "grain_size_analysis_method",
+  "operating_conditions",
+  "method_of_evaluation",
+  "column_break_nmhw",
+  "grain_size_index_to",
+  "grain_size_index_from",
+  "mean_intercept",
+  "standard_deviations",
+  "column_break_rpgo",
+  "95confidence_interval",
+  "total_intercepts",
+  "_reletive_accuracy",
   "section_break_chce",
   "document_id",
   "column_break_kqst",
@@ -32,8 +62,11 @@
   "amended_from",
   "image_section",
   "product_image_1",
+  "total_magnification_1",
   "column_break_lbzi",
   "product_image_2",
+  "column_break_ejyo",
+  "product_image_3",
   "section_break_dume",
   "customer_specification",
   "column_break_qvzk",
@@ -43,24 +76,106 @@
   "section_break_sxqk",
   "test_deatils_physical_column",
   "excel_file",
-  "column_break_zcbl",
+  "test_details_physical",
   "section_break_yehn",
   "upload_excel_file",
-  "column_break_xkzy",
+  "test_details",
   "test_details_metallography_section",
   "attach_excel_file",
-  "column_break_bygm",
-  "section_break_mmvb",
-  "test_details",
-  "test_details_physical",
   "test_details_metallography",
-  "section_break_jydf",
-  "field_wise_volume_estimate",
+  "section_break_eira",
+  "test_completion_date",
+  "column_break_jarx",
+  "test_completion_time",
+  "section_break_ypgl",
+  "specimen_dimension",
+  "specimen_location",
+  "column_break_mjpd",
+  "sample_location",
+  "sample_preparation",
+  "type_of_method_used",
+  "column_break_zyea",
+  "etchant",
+  "etching_condition",
+  "observation",
+  "section_break_hrof",
+  "location",
+  "test",
+  "scale",
+  "min",
+  "column_break_dvvg",
+  "load",
+  "dial",
+  "indentor",
+  "max",
+  "column_break_mjxw",
+  "row1",
+  "row2",
+  "row3",
+  "row4",
+  "row5",
+  "row6",
+  "section_break_pudd",
+  "add_data",
+  "brinell_hardness_child",
+  "section_break_aobz",
+  "number_of_set",
+  "dimension_of_the_specimen",
+  "column_break_nckt",
+  "data_azah",
+  "nominal_striking_energy_of_the_pendulum",
+  "column_break_guqy",
+  "number_of_pices_in_each_set",
+  "sample_preparations",
+  "radius_of_striker",
+  "section_break_tuui",
+  "absorbed_energy_in_joulesj_of_each_specimen",
+  "section_break_jfhb",
+  "average_aboserbed_energy_of_one_set",
+  "lateral_expansion",
+  "column_break_dlrb",
+  "test_temperature",
+  "fracture_appearance__shear",
+  "column_break_uwel",
+  "unbroken_specimens",
+  "sample_locations",
+  "section_break_imoi",
+  "column_break_tbij",
+  "chemical_test_template",
+  "chemical_test_details",
+  "section_break_wjvu",
+  "metallography_test_table",
+  "no_of_fields_examinated",
+  "no_of_replicates_examined",
+  "section_break_yboz",
+  "no_of_fields",
+  "metallography_test_pp",
+  "section_break_tigz",
+  "estimated_valume_",
+  "frame_area",
+  "95_confidence_interval",
+  "column_break_lkhp",
+  "grid_size_number_of_points",
+  "pp_i_no_of_fields",
+  "pp_average",
+  "section_break_cweb",
+  "standard_deviation",
+  "section_break_dbmo",
+  "95__confidence_interval",
+  "95__confidence_interval_for_120_fields",
+  "_relative_accuracy",
+  "column_break_jgix",
+  "_relative_accuracy_for_120_fields",
+  "volume_fraction_ferrite_",
+  "volume_fraction_ferrite__for_120_fields",
+  "section_break_yvog",
+  "items",
   "section_break_lyrn",
   "witness_name",
   "remark",
   "column_break_oqpn",
-  "customer_requirement"
+  "customer_requirement",
+  "status"
  ],
  "fields": [
   {
@@ -106,6 +221,7 @@
   {
    "fieldname": "test_method",
    "fieldtype": "Link",
+   "in_standard_filter": 1,
    "label": "Test Method",
    "options": "Test Method"
   },
@@ -149,7 +265,7 @@
    "depends_on": "eval:doc.test_group ==\"Chemical\"",
    "fieldname": "section_break_yehn",
    "fieldtype": "Section Break",
-   "label": "Test Details Chemical"
+   "label": "Test Details"
   },
   {
    "fieldname": "sample_description",
@@ -180,7 +296,6 @@
    "fieldtype": "Column Break"
   },
   {
-   "depends_on": "eval:doc.test_group==\"Chemical\"",
    "fieldname": "test_details",
    "fieldtype": "Table",
    "label": "Test Details Chemical",
@@ -211,14 +326,6 @@
    "label": "Is Print"
   },
   {
-   "fieldname": "column_break_xkzy",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "section_break_mmvb",
-   "fieldtype": "Section Break"
-  },
-  {
    "fieldname": "material_specification",
    "fieldtype": "Link",
    "label": "Material Specification",
@@ -240,17 +347,16 @@
    "options": "\nYes\nNo"
   },
   {
-   "depends_on": "eval:doc.test_group !=\"Chemical\" && doc.test_group !=\"Metallography Test\"",
    "fieldname": "test_details_physical",
    "fieldtype": "Table",
    "label": "Test Details Physical",
    "options": "Test Details Physical"
   },
   {
-   "depends_on": "eval:doc.test_group !=\"Chemical\" && doc.test_group !=\"Metallography Test\"",
+   "depends_on": "eval:doc.test_group==\"Physical\"",
    "fieldname": "section_break_sxqk",
    "fieldtype": "Section Break",
-   "label": "Test Deatils Physical"
+   "label": "Test Deatils"
   },
   {
    "fieldname": "test_deatils_physical_column",
@@ -260,10 +366,6 @@
    "fieldname": "excel_file",
    "fieldtype": "Attach",
    "label": "Excel File"
-  },
-  {
-   "fieldname": "column_break_zcbl",
-   "fieldtype": "Column Break"
   },
   {
    "fieldname": "column_break_wbku",
@@ -306,25 +408,14 @@
   },
   {
    "depends_on": "eval: doc.test_group == \"Metallography Test\"",
-   "fieldname": "test_details_metallography",
-   "fieldtype": "Table",
-   "label": "Test Details Metallography",
-   "options": "Metallography Items"
-  },
-  {
-   "depends_on": "eval: doc.test_group == \"Metallography Test\"",
    "fieldname": "test_details_metallography_section",
    "fieldtype": "Section Break",
-   "label": "Test Details Metallography"
+   "label": "Test Details"
   },
   {
    "fieldname": "attach_excel_file",
    "fieldtype": "Attach",
    "label": "Attach Excel File"
-  },
-  {
-   "fieldname": "column_break_bygm",
-   "fieldtype": "Column Break"
   },
   {
    "fieldname": "image_section",
@@ -346,22 +437,642 @@
    "label": "Product Image 2"
   },
   {
-   "fieldname": "section_break_jydf",
+   "fieldname": "total_magnification_1",
+   "fieldtype": "Data",
+   "label": "Total Magnification "
+  },
+  {
+   "fieldname": "section_break_imoi",
    "fieldtype": "Section Break"
   },
   {
-   "fieldname": "field_wise_volume_estimate",
+   "depends_on": "eval: doc.test_group == \"Chemical\"",
+   "fieldname": "chemical_test_template",
+   "fieldtype": "Link",
+   "label": "Chemical Test Template",
+   "options": "Chemical Test Template"
+  },
+  {
+   "depends_on": "eval: doc.test_group == \"Chemical\"",
+   "fieldname": "chemical_test_details",
    "fieldtype": "Table",
-   "label": "Field wise Volume Estimate",
-   "options": "Volume Table"
+   "label": "Chemical Test Details",
+   "options": "Chemical Test Child for Lab Analyst"
+  },
+  {
+   "depends_on": "eval:doc.test_method ==\"Inclusion content Analysis ASTM E45 : 25 Method A\" || doc.test_method == \"Inclusion content Analysis DIN 50602 : 1985 Method K3\"",
+   "fieldname": "section_break_wjvu",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "metallography_test_table",
+   "fieldtype": "Table",
+   "label": "Metallography Test Table",
+   "options": "Metallography Test"
+  },
+  {
+   "fieldname": "test",
+   "fieldtype": "Data",
+   "label": "Test"
+  },
+  {
+   "fieldname": "scale",
+   "fieldtype": "Data",
+   "label": "Scale"
+  },
+  {
+   "fieldname": "load",
+   "fieldtype": "Data",
+   "label": "Load"
+  },
+  {
+   "fieldname": "indentor",
+   "fieldtype": "Data",
+   "label": "Indentor"
+  },
+  {
+   "depends_on": "eval:doc.test_group==\"Chemical\"",
+   "fieldname": "column_break_tbij",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_ejyo",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "product_image_3",
+   "fieldtype": "Attach Image",
+   "label": "Product Image 3"
+  },
+  {
+   "depends_on": "eval: doc.test_method !== \"Ferrite By Ferritoscope ASTM A800/A800M : 20\"",
+   "fieldname": "section_break_ypgl",
+   "fieldtype": "Section Break",
+   "label": "Microstructure Analysis"
+  },
+  {
+   "default": "Now",
+   "fieldname": "test_completion_time",
+   "fieldtype": "Time",
+   "label": "Test Completion Time"
+  },
+  {
+   "fieldname": "specimen_dimension",
+   "fieldtype": "Data",
+   "label": "Specimen Dimension"
+  },
+  {
+   "fieldname": "sample_location",
+   "fieldtype": "Data",
+   "label": "Sample Location"
+  },
+  {
+   "depends_on": "eval: doc.test_method !== \"Inclusion content Analysis DIN 50602 : 1985 Method K3\" && doc.test_method !== \"Inclusion content Analysis ASTM E45 : 25 Method A\"\r\n",
+   "fieldname": "etching_condition",
+   "fieldtype": "Select",
+   "label": "Etching Condition",
+   "options": "Select Etching Condition\n70-80 Degree Centigrade about 15-30 Min.\nElectrolytic etching, 3V for 6 to 8 seconds\nElectrolytic etching, 6V for 1-3 minutes\nElectrolytic etching, 6V for 10-30 seconds\nElectrolytic etching,3V for 8-10seconds\nElectrolytic etching,6V for 15-20seconds\nElectrolytic etching,6V for 5-10seconds\nElectrolytic etching,6V for 5-60seconds\nElectrolytic etching,6V for 9-10seconds\nElectrolytic Etching: 1Amp/cm2 for 90 seconds\nImmersion at room temperature for 30-120s\nImmersion etching\nImmersion etching for 1 to 5 min.\nSwab etching\nSwabbing\nUnetched Condition"
+  },
+  {
+   "fieldname": "observation",
+   "fieldtype": "Data",
+   "label": "Observation"
+  },
+  {
+   "fieldname": "column_break_zyea",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Today",
+   "fieldname": "test_completion_date",
+   "fieldtype": "Date",
+   "label": "Test Completion Date"
+  },
+  {
+   "fieldname": "sample_preparation",
+   "fieldtype": "Select",
+   "label": "Sample Preparation",
+   "options": "Select Sample Preparation\n120 Grit Polishing\nAs Per ASTM E3\nIn-situ Metallography\nMechanical Polishing\nMechanical Polishing with Emery Papers and Disc la"
+  },
+  {
+   "depends_on": "eval: doc.test_method !== \"Inclusion content Analysis DIN 50602 : 1985 Method K3\" &&\r\n      doc.test_method !== \"Inclusion content Analysis ASTM E45 : 25 Method A\"\r\n",
+   "fieldname": "etchant",
+   "fieldtype": "Select",
+   "label": "Etchant",
+   "options": "Select Etchant\n0.5% HF\n10% Ammonium Persulfate\n10% Chromic Acid\n10% NaOH\n10% Oxalic Acid\n2% Nital\n20% NaOH\n4% Nital\n40% KOH\n40%NaOH\n50ml conc. HCL + 50ml Water\nAcetic Glycergia\nAqua Regia\nBeraha's\nBeraha's Tint Etchant\nFecl3+HCL+H2O+Ethanol\nGlyceregia\nKeller's Reagent\nMarble's Reagent\nVilella's Reagent"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "\nSelect Status\nClose\nIn Process\nOpen"
+  },
+  {
+   "depends_on": "eval: doc.test_method == \"Brinell Hardness Test ASTM A370-24a & ASTM E10-23\"",
+   "fieldname": "section_break_hrof",
+   "fieldtype": "Section Break",
+   "label": "Brinell Hardness"
+  },
+  {
+   "fieldname": "location",
+   "fieldtype": "Data",
+   "label": "Location"
+  },
+  {
+   "fieldname": "min",
+   "fieldtype": "Data",
+   "label": "Min"
+  },
+  {
+   "fieldname": "column_break_dvvg",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "dial",
+   "fieldtype": "Data",
+   "label": "Dial"
+  },
+  {
+   "fieldname": "max",
+   "fieldtype": "Data",
+   "label": "Max"
+  },
+  {
+   "depends_on": "eval: doc.test_method == \"Brinell Hardness Test ASTM A370-24a & ASTM E10-23\"",
+   "fieldname": "section_break_pudd",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "brinell_hardness_child",
+   "fieldtype": "Table",
+   "label": "Brinell Hardness Child",
+   "options": "Brinell Hardness Child"
+  },
+  {
+   "fieldname": "column_break_mjpd",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_mjxw",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_eira",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_jarx",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "add_data",
+   "fieldtype": "Button",
+   "label": "Add Data"
+  },
+  {
+   "depends_on": "eval:doc.test_method ==\"Charpy Impact Test ASTM A370-24a & ASTM E23-25\"",
+   "fieldname": "section_break_aobz",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "number_of_set",
+   "fieldtype": "Int",
+   "label": "Number of Set"
+  },
+  {
+   "fieldname": "dimension_of_the_specimen",
+   "fieldtype": "Data",
+   "label": "Dimension of the Specimen"
+  },
+  {
+   "fieldname": "data_azah",
+   "fieldtype": "Data",
+   "label": "Type of Notch"
+  },
+  {
+   "fieldname": "nominal_striking_energy_of_the_pendulum",
+   "fieldtype": "Data",
+   "label": "Nominal Striking Energy of the Pendulum"
+  },
+  {
+   "fieldname": "column_break_guqy",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "number_of_pices_in_each_set",
+   "fieldtype": "Int",
+   "label": "Number of Pices in Each Set"
+  },
+  {
+   "fieldname": "sample_preparations",
+   "fieldtype": "Data",
+   "label": "Sample Preparations"
+  },
+  {
+   "fieldname": "radius_of_striker",
+   "fieldtype": "Data",
+   "label": "Radius of Striker"
+  },
+  {
+   "depends_on": "eval:doc.test_method ==\"Charpy Impact Test ASTM A370-24a & ASTM E23-25\"",
+   "fieldname": "section_break_tuui",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "absorbed_energy_in_joulesj_of_each_specimen",
+   "fieldtype": "Table",
+   "label": "Absorbed Energy in Joules(J) of Each Specimen",
+   "options": "Absorbed Energy in Joules of Each Specimen"
+  },
+  {
+   "fieldname": "column_break_nckt",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.test_method ==\"Charpy Impact Test ASTM A370-24a & ASTM E23-25\"",
+   "fieldname": "section_break_jfhb",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "average_aboserbed_energy_of_one_set",
+   "fieldtype": "Float",
+   "label": "Average Aboserbed Energy of One Set",
+   "precision": "2"
+  },
+  {
+   "fieldname": "lateral_expansion",
+   "fieldtype": "Data",
+   "label": "Lateral Expansion"
+  },
+  {
+   "fieldname": "column_break_dlrb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "test_temperature",
+   "fieldtype": "Data",
+   "label": "Test Temperature"
+  },
+  {
+   "fieldname": "fracture_appearance__shear",
+   "fieldtype": "Data",
+   "label": "Fracture Appearance (% shear)"
+  },
+  {
+   "fieldname": "column_break_uwel",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "unbroken_specimens",
+   "fieldtype": "Data",
+   "label": "Unbroken Specimens"
+  },
+  {
+   "fieldname": "sample_locations",
+   "fieldtype": "Data",
+   "label": "Sample Locations"
+  },
+  {
+   "fieldname": "row1",
+   "fieldtype": "Float",
+   "label": "R1",
+   "precision": "1"
+  },
+  {
+   "fieldname": "row2",
+   "fieldtype": "Float",
+   "label": "R2",
+   "precision": "1"
+  },
+  {
+   "fieldname": "row3",
+   "fieldtype": "Float",
+   "label": "R3",
+   "precision": "1"
+  },
+  {
+   "fieldname": "row4",
+   "fieldtype": "Float",
+   "label": "R4",
+   "precision": "1"
+  },
+  {
+   "fieldname": "row5",
+   "fieldtype": "Float",
+   "label": "R5",
+   "precision": "1"
+  },
+  {
+   "fieldname": "row6",
+   "fieldtype": "Float",
+   "label": "R6",
+   "precision": "1"
+  },
+  {
+   "depends_on": "eval: doc.test_group == \"Chemical\" || doc.test_method == \"Coating Weight Measurement IS 3618 : 1966     (Reaffirmed Year : 2021 )\" || doc.test_method == \"Ferrite By Ferritoscope ASTM A800/A800M : 20\"",
+   "fieldname": "room_tempc",
+   "fieldtype": "Float",
+   "label": "Room Temp.(\u00b0C)"
+  },
+  {
+   "fieldname": "specimen_location",
+   "fieldtype": "Data",
+   "label": "Specimen Location"
+  },
+  {
+   "fieldname": "no_of_replicates_examined",
+   "fieldtype": "Int",
+   "label": "No of Replicates Examined"
+  },
+  {
+   "fieldname": "no_of_fields_examinated",
+   "fieldtype": "Int",
+   "label": "No of Fields Examinated"
+  },
+  {
+   "depends_on": "eval: doc.test_method == \"Volume Fraction Analysis ASTM E562 : 19e1\"",
+   "fieldname": "section_break_tigz",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "estimated_valume_",
+   "fieldtype": "Float",
+   "label": "Estimated Valume (%)"
+  },
+  {
+   "fieldname": "frame_area",
+   "fieldtype": "Data",
+   "label": "Frame Area"
+  },
+  {
+   "fieldname": "95_confidence_interval",
+   "fieldtype": "Float",
+   "label": "95% Confidence Interval"
+  },
+  {
+   "fieldname": "pp_average",
+   "fieldtype": "Float",
+   "label": "Pp Average"
+  },
+  {
+   "fieldname": "column_break_lkhp",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "grid_size_number_of_points",
+   "fieldtype": "Int",
+   "label": "Grid Size (Number of points)"
+  },
+  {
+   "fieldname": "no_of_fields",
+   "fieldtype": "Int",
+   "label": "No Of Fields"
+  },
+  {
+   "fieldname": "pp_i_no_of_fields",
+   "fieldtype": "Float",
+   "label": "PP i no. of fields"
+  },
+  {
+   "depends_on": "eval: doc.test_method == \"Volume Fraction Analysis ASTM E562 : 19e1\"",
+   "fieldname": "section_break_cweb",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "standard_deviation",
+   "fieldtype": "Table",
+   "label": "Standard Deviation",
+   "options": "Standard Deviation"
+  },
+  {
+   "depends_on": "eval: doc.test_method == \"Volume Fraction Analysis ASTM E562 : 19e1\"",
+   "fieldname": "section_break_dbmo",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "95__confidence_interval",
+   "fieldtype": "Float",
+   "label": "95 % confidence interval"
+  },
+  {
+   "fieldname": "95__confidence_interval_for_120_fields",
+   "fieldtype": "Float",
+   "label": "95 % confidence interval for 120 fields"
+  },
+  {
+   "fieldname": "_relative_accuracy",
+   "fieldtype": "Float",
+   "label": "% Relative Accuracy"
+  },
+  {
+   "fieldname": "column_break_jgix",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "_relative_accuracy_for_120_fields",
+   "fieldtype": "Float",
+   "label": "% Relative accuracy for 120 fields"
+  },
+  {
+   "fieldname": "volume_fraction_ferrite_",
+   "fieldtype": "Float",
+   "label": "Volume fraction (Ferrite %)"
+  },
+  {
+   "fieldname": "volume_fraction_ferrite__for_120_fields",
+   "fieldtype": "Float",
+   "label": "Volume fraction (Ferrite %) for 120 fields"
+  },
+  {
+   "depends_on": "eval: doc.test_method == \"Volume Fraction Analysis ASTM E562 : 19e1\"",
+   "fieldname": "section_break_yboz",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "mrn",
+   "fieldtype": "Data",
+   "label": "MRN"
+  },
+  {
+   "fieldname": "metallography_test_pp",
+   "fieldtype": "Table",
+   "label": "Metallography Test Pp",
+   "options": "Metallography Test PP Table"
+  },
+  {
+   "depends_on": "eval: doc.test_group == \"Metallography Test\"",
+   "fieldname": "test_details_metallography",
+   "fieldtype": "Table",
+   "label": "Test Details Metallography",
+   "options": "Metallography Items"
+  },
+  {
+   "depends_on": "eval: doc.test_method == \"Coating Weight Measurement IS 3618 : 1966     (Reaffirmed Year : 2021 )\" || doc.test_method == \"Ferrite By Ferritoscope ASTM A800/A800M : 20\"",
+   "fieldname": "location_of_test",
+   "fieldtype": "Data",
+   "label": "Location of Test"
+  },
+  {
+   "depends_on": "eval: doc.test_method == \"Coating Weight Measurement IS 3618 : 1966     (Reaffirmed Year : 2021 )\"",
+   "fieldname": "equipment",
+   "fieldtype": "Data",
+   "label": "Equipment"
+  },
+  {
+   "depends_on": "eval: doc.test_method == \"Coating Weight Measurement IS 3618 : 1966     (Reaffirmed Year : 2021 )\"",
+   "fieldname": "other_information",
+   "fieldtype": "Data",
+   "label": "Other Information"
+  },
+  {
+   "depends_on": "eval: doc.test_method == \"Ferrite By Ferritoscope ASTM A800/A800M : 20\"",
+   "fieldname": "section_break_wypy",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "name_of_instrument",
+   "fieldtype": "Data",
+   "label": "Name of Instrument"
+  },
+  {
+   "fieldname": "column_break_yxct",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "model",
+   "fieldtype": "Data",
+   "label": "Model "
+  },
+  {
+   "fieldname": "column_break_vpgn",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "calibration_date",
+   "fieldtype": "Date",
+   "label": "Calibration Date"
+  },
+  {
+   "fieldname": "column_break_dkhm",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "brandmake",
+   "fieldtype": "Data",
+   "label": "Brand/Make"
+  },
+  {
+   "depends_on": "eval: doc.test_method == \"Ferrite By Ferritoscope ASTM A800/A800M : 20\"",
+   "fieldname": "section_break_yvog",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "items",
+   "fieldtype": "Table",
+   "label": "Items",
+   "options": "Ferrite By Ferritoscope Items"
+  },
+  {
+   "depends_on": "eval: doc.test_method == \"Microstructure Analysis ASTM A262 : 15(2021) Practice A\"",
+   "fieldname": "sensitization_treatement",
+   "fieldtype": "Select",
+   "label": "Sensitization Treatement",
+   "options": "No\nYes"
+  },
+  {
+   "depends_on": "eval: doc.test_method == \"Microstructure Analysis ASTM A262 : 15(2021) Practice A\" \r\n      && doc.sensitization_treatement == \"Yes\"\r\n",
+   "fieldname": "sensitization_treatement_options",
+   "fieldtype": "Select",
+   "label": "Sensitization Treatement Options",
+   "options": "Select Sensitization Treatement\n1 Hour at 675 degree Celsius\n1 Hour at 675 degrees\n700 degrees for 30 minutes"
+  },
+  {
+   "depends_on": "eval:doc.test_method == \"Coating Thickness Measurement IS 3203 : 1982 (Reaffirmed Year : 2021 )\" || doc.test_method == \"Case Depth Measurement IS 6416 : 2022\"",
+   "fieldname": "type_of_method_used",
+   "fieldtype": "Data",
+   "label": "Type of Method Used"
+  },
+  {
+   "depends_on": "eval: doc.test_method == \"Case Depth Measurement IS 6416 : 2022\"",
+   "fieldname": "case_depth",
+   "fieldtype": "Data",
+   "label": "Case Depth"
+  },
+  {
+   "depends_on": "eval: doc.test_method == \"Grain size Analysis IS 4748 : 2021 ( ISO 643:2019)\"",
+   "fieldname": "section_break_yhdo",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "type_of_grain_determined",
+   "fieldtype": "Data",
+   "label": "Type of Grain Determined"
+  },
+  {
+   "fieldname": "grain_size_analysis_method",
+   "fieldtype": "Data",
+   "label": "Grain Size Analysis Method"
+  },
+  {
+   "fieldname": "operating_conditions",
+   "fieldtype": "Data",
+   "label": "Operating Conditions"
+  },
+  {
+   "fieldname": "method_of_evaluation",
+   "fieldtype": "Data",
+   "label": "Method of Evaluation"
+  },
+  {
+   "fieldname": "grain_size_index_to",
+   "fieldtype": "Float",
+   "label": "Grain Size Index To"
+  },
+  {
+   "fieldname": "grain_size_index_from",
+   "fieldtype": "Float",
+   "label": "Grain Size Index From"
+  },
+  {
+   "fieldname": "column_break_nmhw",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "mean_intercept",
+   "fieldtype": "Data",
+   "label": "Mean Intercept"
+  },
+  {
+   "fieldname": "standard_deviations",
+   "fieldtype": "Data",
+   "label": "Standard Deviations"
+  },
+  {
+   "fieldname": "column_break_rpgo",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "95confidence_interval",
+   "fieldtype": "Data",
+   "label": "95 % Confidence Interval"
+  },
+  {
+   "fieldname": "total_intercepts",
+   "fieldtype": "Int",
+   "label": "Total Intercepts"
+  },
+  {
+   "fieldname": "_reletive_accuracy",
+   "fieldtype": "Data",
+   "label": "% Reletive Accuracy"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-12-01 18:24:37.183891",
- "modified_by": "saifa@sanpra.co.in",
+ "modified": "2025-12-22 17:03:34.923933",
+ "modified_by": "Administrator",
  "module": "Delta Sanpra",
  "name": "Lab Analyst",
  "naming_rule": "Expression",

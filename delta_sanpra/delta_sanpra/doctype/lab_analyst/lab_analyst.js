@@ -12,8 +12,6 @@ frappe.ui.form.on("Lab Analyst", {
             frm.save_or_update();
             original_print.call(frm);
         };
-
-
     },
     refresh(frm) {
         apply_highlight_from_backend(frm);
@@ -26,35 +24,73 @@ frappe.ui.form.on("Lab Analyst", {
             }
         })
     },
-    // after_save(frm) {
-    //     apply_highlight_from_backend(frm);
-    // },
-    // onload_post_render(frm) {
-    //     apply_highlight_from_backend(frm);
-    // },
-    // ****************************************************************************************8
-    // async upload_excel_file(frm) {
-    //     if (frm.doc.upload_excel_file) {
-    //         await frm.call({
-    //             method: "create_rate_chart_from_excel",
-    //             doc: frm.doc,
-    //         });
-    //         frm.refresh_field("test_details");
-    //         apply_highlight_from_backend(frm);
-    //     }
-    // },
     upload_excel_file(frm) {
         if (frm.doc.upload_excel_file) {
             frm.call({
-                method: "create_rate_chart_from_excel",   // Calls Python method
+                method: "create_rate_chart_from_excel",
                 doc: frm.doc,
             }).then(() => {
-                frm.refresh_field("test_details");       // Refresh child table
-                apply_highlight_from_backend(frm);       // Custom handler
+                frm.refresh_field("test_details");
+                apply_highlight_from_backend(frm);
             });
+        }
+    },
+    chemical_test_template(frm) {
+        frappe.call({
+            method: "get_parameters",
+            doc: frm.doc,
+            callback: function (r) {
+                frm.refresh_field("chemical_test_details");
+            }
+        });
+    },
+    add_data(frm) {
+        frappe.call({
+            method: "add_data",
+            doc: frm.doc,
+            callback: function (r) {
+                frm.refresh_field("brinell_hardness_child")
+            }
+        })
+    },
+    test_group: function (frm) {
+        frm.set_value('test_method', null);
+        frm.set_query('test_method', function () {
+            return {
+                filters: {
+                    test_group: frm.doc.test_group
+                }
+            };
+        });
+    },
+    no_of_fields(frm) {
+        if (frm.doc.no_of_fields == null) return;
+
+        frm.call({
+            method: "update_metallography_rows",
+            doc: frm.doc,
+            callback() {
+                frm.refresh_field("metallography_test_pp");
+            }
+        });
+    }
+});
+frappe.ui.form.on("Metallography Test PP Table", {
+    metallography_test_pp_add(frm, cdt, cdn) {
+        let qty = frm.doc.no_of_fields || 0;
+        let rows = frm.doc.metallography_test_pp.length;
+
+        if (rows > qty) {
+            frappe.msgprint(
+                __("You cannot add more than {0} rows because No of Fields is {0}", [qty])
+            );
+            frm.doc.metallography_test_pp.pop();
+            frm.refresh_field("metallography_test_pp");
+            return false;
         }
     }
 });
+
 // *****************************************************************************************************
 frappe.ui.form.on("Test Details", {
     value(frm, cdt, cdn) {
@@ -159,3 +195,19 @@ function apply_highlight_from_backend(frm) {
 }
 
 //******************************************************************************************************
+frappe.ui.form.on("Absorbed Energy in Joules of Each Specimen", {
+    range(frm, cdt, cdn) {
+        // frappe.throw("Hii")
+        calculate_absorbed_energy(frm);
+    }
+})
+function calculate_absorbed_energy(frm) {
+    frappe.call({
+        method: "get_avg_absorbed_energy",
+        doc: frm.doc,
+        callback: function (r) {
+            console.log(r.massege)
+            frm.refresh_field("average_aboserbed_energy_of_one_set");
+        }
+    })
+}

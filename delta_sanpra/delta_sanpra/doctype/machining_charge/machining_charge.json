@@ -7,23 +7,23 @@
  "engine": "InnoDB",
  "field_order": [
   "material_type",
+  "description",
   "column_break_kduy",
   "thik_dia",
   "column_break_vgqi",
   "cuuting_charge",
   "column_break_mcil",
-  "quantity",
   "total",
-  "section_break_yctf",
-  "description"
+  "column_break_hjbf",
+  "type_of__material"
  ],
  "fields": [
   {
    "fieldname": "material_type",
-   "fieldtype": "Select",
+   "fieldtype": "Link",
    "in_list_view": 1,
-   "label": "Material Type",
-   "options": "\nCS\nSS\nDuplex\nNickal\nNon fe"
+   "label": "Material",
+   "options": "Item"
   },
   {
    "fieldname": "column_break_kduy",
@@ -34,29 +34,22 @@
    "fieldtype": "Float",
    "in_list_view": 1,
    "label": "Thik/Dia",
-   "precision": "0"
+   "precision": "1"
   },
   {
    "fieldname": "column_break_vgqi",
    "fieldtype": "Column Break"
   },
   {
+   "fetch_from": "type_of__material.rate",
    "fieldname": "cuuting_charge",
    "fieldtype": "Float",
    "in_list_view": 1,
-   "label": "Cuuting Charge",
-   "precision": "2"
+   "label": "Cutting Charges"
   },
   {
    "fieldname": "column_break_mcil",
    "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "quantity",
-   "fieldtype": "Float",
-   "in_list_view": 1,
-   "label": "Quantity",
-   "precision": "2"
   },
   {
    "fieldname": "total",
@@ -67,21 +60,29 @@
    "read_only": 1
   },
   {
-   "fieldname": "section_break_yctf",
-   "fieldtype": "Section Break"
-  },
-  {
    "fieldname": "description",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "Description"
+  },
+  {
+   "fieldname": "column_break_hjbf",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "material_type.custom_material_types",
+   "fieldname": "type_of__material",
+   "fieldtype": "Link",
+   "label": "Type of  Material",
+   "options": "Material Type"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2025-11-10 20:15:06.248473",
- "modified_by": "Administrator",
+ "modified": "2025-12-06 17:53:15.464769",
+ "modified_by": "saifa@sanpra.co.in",
  "module": "Delta Sanpra",
  "name": "Machining Charge",
  "owner": "Administrator",

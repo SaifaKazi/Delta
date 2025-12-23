@@ -1,17 +1,23 @@
 # # Copyright (c) 2025, Sanpra Software Solution and contributors
 # # For license information, please see license.txt
-import frappe
-from frappe.model.document import Document
-from openpyxl import load_workbook
 import io
+import frappe
+from openpyxl import load_workbook
+from frappe.utils import nowdate, nowtime
+from frappe.model.document import Document
+from frappe.utils import cint
+
+
 class LabAnalyst(Document):
+    def on_update(self):
+        self.on_update_after_submit()
     def before_save(self):
         # if self.excel_file and not self.test_details_physical:
         self.create_physical_details_from_excel()
         self.create_test_details_metallography()
             
      
-        for row in self.test_details:
+        for row in self.test_details: 
             if not row.value:
                 continue
             value = float(row.value)
@@ -38,6 +44,7 @@ class LabAnalyst(Document):
 #******************************************************************************************************** 
     def on_submit(self):
         self.get_child_table_id()
+        self.on_update_after_submit()
 
     def get_child_table_id(self):
         inward_doc = frappe.get_doc("Sample Inward", self.inward_number)
@@ -101,9 +108,9 @@ class LabAnalyst(Document):
                     # Highlight if value < min_range OR value > max_range
                     if value is not None and min_range is not None and max_range is not None:
                         if value < min_range or value > max_range:
-                            colors[row.name] = "#88E788"
+                            colors[row.name] = "#FF7A7A"     # RED
                         else:
-                            colors[row.name] = ""
+                            colors[row.name] = "#7CFF7C"     # GREEN
                     else:
                         colors[row.name] = ""
                 except:
@@ -135,7 +142,6 @@ class LabAnalyst(Document):
                 break
 
         return [data] 
-    
 #**********************************************************************************************************
     @frappe.whitelist()
     def create_test_details_metallography(self):
@@ -160,6 +166,73 @@ class LabAnalyst(Document):
                 "parameter": str(parameter).strip(),
                 "value": final_value
             })
+#**********************************************************************************************************   
+    @frappe.whitelist()
+    def get_parameters(self):
+        template = frappe.get_doc("Chemical Test Template", self.chemical_test_template)
+        data = []
+        for row in template.items:
+            self.append("chemical_test_details",{
+                "parameter": row.parameter
+            })
+#**********************************************************************************************************   
+    @frappe.whitelist()
+    def add_data(self):
+        readings = [self.row1, self.row2, self.row3, self.row4, self.row5, self.row6]
+        valid_readings = [r for r in readings if r not in (None, "", 0)]
+
+        # Calculate average only if values exist
+        avg = sum(valid_readings) / len(valid_readings) if valid_readings else 0
+        # data = self.r1 + self.r2 + self.r3 + self.r4 + self.r5 + self.r6
+        # avg = data
+        self.append("brinell_hardness_child", {
+            "location": self.location,
+            "test": self.test,
+            "scale": self.scale,
+            "load": self.load,
+            "dial": self.dial,
+            "indentor": self.indentor,
+            "min": self.min,
+            "max": self.max,
+            "avg": avg
+        })
+#**********************************************************************************************************
+    @frappe.whitelist()
+    def get_avg_absorbed_energy(self):
+        total = 0
+        count = 0
+        for row in self.absorbed_energy_in_joulesj_of_each_specimen:
+            if row.range not in (None, "", 0):
+                total += row.range
+                count += 1
+        # self.total_absorbed_energy = total
+        self.average_aboserbed_energy_of_one_set = total / count if count else 0
+#**********************************************************************************************************
+    def on_update_after_submit(self):
+        self.db_set("test_completion_date", nowdate())
+        self.db_set("test_completion_time", nowtime())
+#***`*******************************************************************************************************
+    @frappe.whitelist()
+    def update_metallography_rows(self):
+        qty = cint(self.no_of_fields or 0)
+        existing = len(self.metallography_test_pp or [])
+
+        # add rows
+        if qty > existing:
+            for _ in range(qty - existing):
+                self.append("metallography_test_pp", {})
+
+        # remove extra rows
+        elif qty < existing:
+            self.set(
+                "metallography_test_pp",
+                self.metallography_test_pp[:qty]
+            )
+
+        return qty
+
+#**************************************************************************************************
+
 
 
 

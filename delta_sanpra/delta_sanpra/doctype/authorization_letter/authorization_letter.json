@@ -13,7 +13,12 @@
   "section_break_xkyp",
   "select_authorization_template",
   "authorization_template",
-  "amended_from"
+  "amended_from",
+  "column_break_ivgi",
+  "select_authorization_equipment",
+  "authorization_equipment_template",
+  "section_break_oeyp",
+  "description"
  ],
  "fields": [
   {
@@ -66,13 +71,38 @@
    "fieldname": "department",
    "fieldtype": "Data",
    "label": "Department"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Text Editor",
+   "label": "Description"
+  },
+  {
+   "fieldname": "column_break_ivgi",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "select_authorization_equipment",
+   "fieldtype": "Link",
+   "label": "Select Authorization Equipment",
+   "options": "Authorization Equipment"
+  },
+  {
+   "fetch_from": "select_authorization_equipment.authorization_equipment_template",
+   "fieldname": "authorization_equipment_template",
+   "fieldtype": "Text Editor",
+   "label": "Authorization Equipment Template"
+  },
+  {
+   "fieldname": "section_break_oeyp",
+   "fieldtype": "Section Break"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-11-29 13:16:53.991652",
+ "modified": "2025-12-06 13:43:46.834625",
  "modified_by": "saifa@sanpra.co.in",
  "module": "Delta Sanpra",
  "name": "Authorization Letter",

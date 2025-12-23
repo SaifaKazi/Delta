@@ -30,31 +30,11 @@ frappe.ui.form.on('Interview', {
     }
 });
 //*************************************************************************************
-// frappe.ui.form.on('Expected Skillset', {
-//     marks: function (frm, cdt, cdn) {
-//         frappe.msgprint("hello");
-//         frm.refresh_field("custom_expected_skillset");
-//     }
-// });
-
-// frappe.ui.form.on('Expected Skillset', {
-//     marks: function (frm, cdt, cdn) {
-//         let row = locals[cdt][cdn];
-//         if (row.marks > row.custom_each_points_marks) {
-//             frappe.msgprint(`Marks cannot be greater than ${row.custom_each_points_marks}`);
-//         }
-//     }
-// });
-
 frappe.ui.form.on('Expected Skillset', {
     marks: function (frm, cdt, cdn) {
         let row = locals[cdt][cdn];
-
         if (row.marks > frm.doc.custom_each_points_marks) {
-            // warning दिखाएँ
             frappe.msgprint(`Marks cannot be greater than ${frm.doc.custom_each_points_marks}`);
-
-            // wrong value reset करें
             frappe.model.set_value(cdt, cdn, 'marks', frm.doc.custom_each_points_marks);
         }
         let total = 0;

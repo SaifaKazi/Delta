@@ -5,27 +5,19 @@ import frappe
 from frappe.model.document import Document
 from frappe.utils import cint
 
-
-
 class SampleInward(Document):
-
     @frappe.whitelist()
     def validate_material_rows(self):
         qty = int(self.quantity or 0) 
-
         self.set("material_details", [])
         for i in range(qty):
             self.append("material_details", {})
-
         return qty
 #**************************************************************************************************
     @frappe.whitelist()
     def update_material_rows(self):
         qty = int(self.quantity or 0)
         existing_rows = len(self.material_details)
-        # if existing_rows > qty:
-        #     frappe.throw(("You cannot add more than {0} Material Details rows because Quantity is {0}").format(qty)
-        #     )
         if qty > existing_rows:
             for i in range(existing_rows, qty):
                 self.append("material_details", {})
@@ -59,9 +51,9 @@ class SampleInward(Document):
                     test.sample_id = sid
                     test.heat_number = mat.heat_number
                     test.material_shape = mat.material_shape
+                    test.sample_description = mat.sample_description
         if updated:
             frappe.db.set_value("Company", company, "custom_sample_counter", f"S{last}")
-        
 #**************************************************************************************************
     def set_sample_ids(self):
         company_name = "DELTAA METALLIX SOLUTIONS PRIVATE LIMITED"
@@ -71,7 +63,6 @@ class SampleInward(Document):
         if sample_ids:
             max_num = max(int(s.replace("S", "")) for s in sample_ids if s.startswith("S"))
             frappe.db.set_value("Company", company_name, "custom_sample_counter", f"S{max_num}")
-
 #**************************************************************************************************
     def set_test_ids(self):
         company_name = "DELTAA METALLIX SOLUTIONS PRIVATE LIMITED"
@@ -81,8 +72,7 @@ class SampleInward(Document):
             if not row.test_id:
                 row.test_id = str(count)
                 count += 1
-        frappe.db.set_value("Company", company_name, "custom_test_counter", str(count - 1))
-    
+        frappe.db.set_value("Company", company_name, "custom_test_counter", str(count - 1))   
 #**************************************************************************************************
     def get_sample_id_and_test_id(self):
         for row in self.test_on_sample:
@@ -126,11 +116,8 @@ class SampleInward(Document):
             if self.client :
                 new_doc.witness = "Yes"
                 new_doc.witness_name = self.client                
-                
             else: 
                 new_doc.witness = "No" 
-
-                
 
             if row.sample_id and row.test_id:
                 new_doc.document_id = f"{row.sample_id}/{row.test_id}"
@@ -157,16 +144,13 @@ class SampleInward(Document):
     @frappe.whitelist()        
     def get_material_sample_details(self):
         self.test_on_sample = []
-
         for mat_row in self.material_details:
             if mat_row.material_specification:
                 item_doc = frappe.get_doc("Item", mat_row.material_specification)
-
                 for sample_row in item_doc.custom_material_sample_details:
                     # frappe.msgprint(str(sample_row.test_method)) 
                     des_price=frappe.get_value("Test Description", sample_row.test_description, "rate")
                     test_method_doc = frappe.get_doc("Test Method", sample_row.test_method)
-
                     self.append("test_on_sample", {
                         "test_group": test_method_doc.test_group,
                         "test_method": sample_row.test_method,
@@ -184,21 +168,28 @@ class SampleInward(Document):
     @frappe.whitelist()
     def update_cutting_rows(self):
         self.cutting_charge = []
+        self.machining_charge = []
         for row in self.material_details:
             if not row.material_dimension:
                 continue
             dimension = float(row.material_dimension)
             material = row.material_specification 
-            rows_to_add = 2 if dimension >= 50 else 0
-            for i in range(rows_to_add):
-                if i == 0:
-                    thikdia = dimension
-                else:
-                    thikdia = dimension / 2
+            if dimension >= 50:
                 self.append("cutting_charge", {
                     "material": material,
-                    "thik_dia": thikdia
+                    "thik_dia": dimension
+                })
+                half_value = dimension / 2
+                self.append("cutting_charge", {
+                    "material": material,
+                    "thik_dia": half_value
+                })
+                self.append("machining_charge", {
+                    "material_type": material,
+                    "thik_dia": half_value
                 })
         return len(self.cutting_charge)
+#**************************************************************************************************
+
 
 

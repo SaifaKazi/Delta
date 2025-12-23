@@ -45,7 +45,7 @@
    "fieldtype": "Float",
    "in_list_view": 1,
    "label": "Min Range",
-   "precision": "2"
+   "precision": "3"
   },
   {
    "fieldname": "column_break_rgie",
@@ -56,7 +56,7 @@
    "fieldtype": "Float",
    "in_list_view": 1,
    "label": "Max Range",
-   "precision": "2"
+   "precision": "3"
   },
   {
    "fieldname": "column_break_euev",
@@ -102,14 +102,14 @@
    "fieldname": "method_max_range",
    "fieldtype": "Float",
    "label": "Method Max Range",
-   "precision": "2"
+   "precision": "3"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2025-11-10 21:36:21.998456",
+ "modified": "2025-12-04 20:45:25.714193",
  "modified_by": "Administrator",
  "module": "Delta Sanpra",
  "name": "Test Details",
