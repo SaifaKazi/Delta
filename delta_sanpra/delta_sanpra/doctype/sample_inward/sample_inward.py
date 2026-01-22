@@ -112,6 +112,7 @@ class SampleInward(Document):
             new_doc.discipline = row.discipline
             new_doc.challan_no = self.challan_no
             new_doc.customer_name = self.customer
+            new_doc.material_description = row.material_specification
 
             if self.client :
                 new_doc.witness = "Yes"
@@ -164,32 +165,56 @@ class SampleInward(Document):
                         "sample_description":mat_row.sample_description,
                     })
         return self
- #***************************************************************************************   
+#*************************************************************************************************
     @frappe.whitelist()
     def update_cutting_rows(self):
         self.cutting_charge = []
         self.machining_charge = []
+
         for row in self.material_details:
             if not row.material_dimension:
                 continue
-            dimension = float(row.material_dimension)
-            material = row.material_specification 
-            if dimension >= 50:
+
+            dia = float(row.material_dimension)
+            if dia < 50:
+                continue
+
+            item = frappe.get_doc("Item", row.material_specification)
+            material_type = item.custom_material_types
+            if not material_type:
+                continue
+
+            half_dia = dia / 2
+            material_type_doc = frappe.get_doc("Material Type", material_type)
+
+            # ---------------- CUTTING CHARGE ----------------
+            for d in [dia, half_dia]:
+                charge = 0
+                for r in material_type_doc.sample_preparation_charges:
+                    if r.processing_charges == "Cutting Charges" and r.from_range <= d <= r.to_range:
+                        charge = r.charges
+                        break
+
                 self.append("cutting_charge", {
-                    "material": material,
-                    "thik_dia": dimension
+                    "material": row.material_specification,
+                    "material_type": material_type,
+                    "thik_dia": d,
+                    "processing_charges": "Cutting Charges",
+                    "total": charge
                 })
-                half_value = dimension / 2
-                self.append("cutting_charge", {
-                    "material": material,
-                    "thik_dia": half_value
-                })
-                self.append("machining_charge", {
-                    "material_type": material,
-                    "thik_dia": half_value
-                })
+
+            # ---------------- MACHINING CHARGE ----------------
+            for r in material_type_doc.sample_preparation_charges:
+                if r.processing_charges != "Cutting Charges" and r.from_range <= half_dia <= r.to_range:
+                    self.append("machining_charge", {
+                        "material_type": material_type,
+                        "materials": row.material_specification,
+                        "thik_dia": half_dia,
+                        "processing_charges": r.processing_charges,
+                        "charge": r.charges
+                    })
+                    break
+
         return len(self.cutting_charge)
-#**************************************************************************************************
-
-
+#*************************************************************************************************
 

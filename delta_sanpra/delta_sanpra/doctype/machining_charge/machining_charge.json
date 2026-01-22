@@ -6,24 +6,26 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "material_type",
+  "materials",
   "description",
   "column_break_kduy",
   "thik_dia",
   "column_break_vgqi",
-  "cuuting_charge",
+  "charge",
   "column_break_mcil",
   "total",
+  "quantity",
   "column_break_hjbf",
-  "type_of__material"
+  "material_type",
+  "column_break_cztn",
+  "processing_charges"
  ],
  "fields": [
   {
    "fieldname": "material_type",
    "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Material",
-   "options": "Item"
+   "label": "Material Type",
+   "options": "Material Type"
   },
   {
    "fieldname": "column_break_kduy",
@@ -39,13 +41,6 @@
   {
    "fieldname": "column_break_vgqi",
    "fieldtype": "Column Break"
-  },
-  {
-   "fetch_from": "type_of__material.rate",
-   "fieldname": "cuuting_charge",
-   "fieldtype": "Float",
-   "in_list_view": 1,
-   "label": "Cutting Charges"
   },
   {
    "fieldname": "column_break_mcil",
@@ -70,19 +65,42 @@
    "fieldtype": "Column Break"
   },
   {
-   "fetch_from": "material_type.custom_material_types",
-   "fieldname": "type_of__material",
+   "fieldname": "quantity",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Quantity"
+  },
+  {
+   "fieldname": "column_break_cztn",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "processing_charges",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Processing Charges",
+   "options": "\nTensile Machining Charges\nImpact Machining Charges\nCutting Charges\nV-notch preparation charges\nWedled/Seamless pipe Cutting Thk upto 20mm\nIGC Practice E Machining\nBend Sample Preparation up to 25mm thk/Dia\nBend Sample Preparation 26 \u2013 40mm thk/Dia\nBend Sample Preparation 41 \u2013 100mm thk/Dia\nBend Sample Preparation above 101mm thk/Dia\nBend Sample Preparation of Welded samples for root/face/side bend\nWeld plate grinding\nMachining for Jominey with Grinding\nMilling Tensile 01-10mm\nMilling Tensile 11-20mm\nTensile Threading\nDrilling Charges\nHeat Treatment Charges\nMandrill Charges"
+  },
+  {
+   "fieldname": "materials",
    "fieldtype": "Link",
-   "label": "Type of  Material",
-   "options": "Material Type"
+   "in_list_view": 1,
+   "label": "Material",
+   "options": "Item"
+  },
+  {
+   "fieldname": "charge",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Cutting Charges"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2025-12-06 17:53:15.464769",
- "modified_by": "saifa@sanpra.co.in",
+ "modified": "2026-01-20 15:43:57.760071",
+ "modified_by": "Administrator",
  "module": "Delta Sanpra",
  "name": "Machining Charge",
  "owner": "Administrator",

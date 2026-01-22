@@ -15,7 +15,7 @@ frappe.ui.form.on("Lab Analyst", {
     },
     refresh(frm) {
         apply_highlight_from_backend(frm);
-
+        set_test_method_filter(frm);
         frm.set_query("parameter", "test_details", function () {
             return {
                 filters: [
@@ -23,6 +23,10 @@ frappe.ui.form.on("Lab Analyst", {
                 ]
             }
         })
+    },
+    test_group(frm) {
+        frm.set_value('test_method', null);
+        set_test_method_filter(frm);
     },
     upload_excel_file(frm) {
         if (frm.doc.upload_excel_file) {
@@ -53,16 +57,6 @@ frappe.ui.form.on("Lab Analyst", {
             }
         })
     },
-    test_group: function (frm) {
-        frm.set_value('test_method', null);
-        frm.set_query('test_method', function () {
-            return {
-                filters: {
-                    test_group: frm.doc.test_group
-                }
-            };
-        });
-    },
     no_of_fields(frm) {
         if (frm.doc.no_of_fields == null) return;
 
@@ -73,8 +67,52 @@ frappe.ui.form.on("Lab Analyst", {
                 frm.refresh_field("metallography_test_pp");
             }
         });
-    }
+    },
+    // no_of_field(frm) {
+    //     if (frm.doc.no_of_field == null) return;
+
+    //     frm.call({
+    //         method: "update_metallography_test_table_rows",
+    //         doc: frm.doc,
+    //         callback() {
+    //             frm.refresh_field("metallography_test_table");
+    //         }
+    //     });
+    // }
+    range1: calc_avg,
+    range2: calc_avg,
+    range3: calc_avg,
+    range4: calc_avg,
+    range5: calc_avg,
+    range6: calc_avg
 });
+function calc_avg(frm) {
+    let total = 0;
+    let count = 0;
+    if (frm.doc.range1) { total += frm.doc.range1; count++; }
+    if (frm.doc.range2) { total += frm.doc.range2; count++; }
+    if (frm.doc.range3) { total += frm.doc.range3; count++; }
+    if (frm.doc.range4) { total += frm.doc.range4; count++; }
+    if (frm.doc.range5) { total += frm.doc.range5; count++; }
+    if (frm.doc.range6) { total += frm.doc.range6; count++; }
+
+    let avg = 0;
+    if (count > 0) {
+        avg = total / count;
+    }
+
+    frm.set_value("average_aboserbed_energy_of_one_set", avg);
+}
+function set_test_method_filter(frm) {
+    frm.set_query('test_method', function () {
+        return {
+            filters: {
+                test_group: frm.doc.test_group || ''
+            }
+        };
+    });
+}
+//*****************************************************************************************************
 frappe.ui.form.on("Metallography Test PP Table", {
     metallography_test_pp_add(frm, cdt, cdn) {
         let qty = frm.doc.no_of_fields || 0;
@@ -86,6 +124,48 @@ frappe.ui.form.on("Metallography Test PP Table", {
             );
             frm.doc.metallography_test_pp.pop();
             frm.refresh_field("metallography_test_pp");
+            return false;
+        }
+        calculate_avg(frm);
+    },
+    pp(frm, cdt, cdn) {
+        calculate_avg(frm);
+    },
+    value(frm, cdt, cdn) {
+        let row = locals[cdt][cdn];
+
+        if (row.value && frm.doc.grid_size_number_of_points) {
+            row.pp = (flt(row.value) / flt(frm.doc.grid_size_number_of_points)) * 100;
+        } else {
+            row.pp = 0;
+        }
+
+        frm.refresh_field("metallography_test_pp");
+        calculate_avg(frm);
+    },
+    metallography_test_pp_remove(frm) {
+        calculate_avg(frm);
+    }
+});
+function calculate_avg(frm) {
+    let total = 0, count = 0;
+    (frm.doc.metallography_test_pp || []).forEach(r => {
+        if (r.pp) { total += flt(r.pp); count++; }
+    });
+    frm.set_value('pp_average', count ? total / count : 0);
+    frm.set_value('pp_i_no_of_fields', total);
+}
+//*****************************************************************************************************
+frappe.ui.form.on("Metallography Test", {
+    metallography_test_table_add(frm, cdt, cdn) {
+        let qty = frm.doc.no_of_field || 0;
+        let rows = frm.doc.metallography_test_table.length;
+        if (rows > qty) {
+            frappe.msgprint(
+                __("You cannot add more than {0} rows because No of Field is {0}", [qty])
+            );
+            frm.doc.metallography_test_table.pop();
+            frm.refresh_field("metallography_test_table");
             return false;
         }
     }
@@ -108,7 +188,6 @@ frappe.ui.form.on("Test Details", {
     test_method(frm, cdt, cdn) {
         let child = locals[cdt][cdn];
         frappe.model.set_value(cdt, cdn, "parameter", "");
-
         items = []
         frappe.call({
             method: "get_test_method",
@@ -163,8 +242,7 @@ function apply_highlight_from_backend(frm) {
         callback: function (r) {
             if (!r.message) return;
             const colors = r.message;
-
-            // ✅ Apply for both tables
+            // Apply for both tables
             const tables = ["test_details", "test_details_physical"];
 
             tables.forEach(table => {
@@ -210,4 +288,19 @@ function calculate_absorbed_energy(frm) {
             frm.refresh_field("average_aboserbed_energy_of_one_set");
         }
     })
+}
+//**********************************************************************************************************
+frappe.ui.form.on("Ferrite By Ferritoscope Items", {
+    measurement_1: calc, measurement_2: calc, measurement_3: calc, measurement_4: calc, measurement_5: calc, measurement_6: calc
+});
+function calc(frm, cdt, cdn) {
+    let row = locals[cdt][cdn];
+    let avg = 0, count = 0, sum = 0;
+
+    for (let i = 1; i <= 6; i++) {
+        let val = parseFloat(row["measurement_" + i]) || 0;
+        if (val) { sum += val; count++; }
+    }
+    avg = count ? sum / count : 0;
+    frappe.model.set_value(cdt, cdn, "avg", avg);
 }

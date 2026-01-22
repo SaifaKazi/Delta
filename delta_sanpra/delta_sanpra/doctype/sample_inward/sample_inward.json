@@ -18,6 +18,7 @@
   "column_break_xocz",
   "received_by",
   "sample_received",
+  "courier_name",
   "column_break_fpkr",
   "challan_no",
   "challan_date",
@@ -86,7 +87,8 @@
    "fieldname": "quantity",
    "fieldtype": "Float",
    "label": "Quantity",
-   "precision": "0"
+   "precision": "0",
+   "reqd": 1
   },
   {
    "fieldname": "column_break_xocz",
@@ -231,6 +233,12 @@
    "fieldname": "sample_received_date",
    "fieldtype": "Date",
    "label": "Sample Received Date"
+  },
+  {
+   "depends_on": "eval:doc.sample_received == \"By Courier\"",
+   "fieldname": "courier_name",
+   "fieldtype": "Data",
+   "label": "Courier Name"
   }
  ],
  "grid_page_length": 50,
@@ -242,8 +250,8 @@
    "link_fieldname": "inward_number"
   }
  ],
- "modified": "2025-12-05 17:49:58.460835",
- "modified_by": "saifa@sanpra.co.in",
+ "modified": "2026-01-22 10:13:12.979247",
+ "modified_by": "Administrator",
  "module": "Delta Sanpra",
  "name": "Sample Inward",
  "naming_rule": "By \"Naming Series\" field",

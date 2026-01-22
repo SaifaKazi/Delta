@@ -6,25 +6,126 @@ from openpyxl import load_workbook
 from frappe.utils import nowdate, nowtime
 from frappe.model.document import Document
 from frappe.utils import cint
+import pdfplumber
+import re
 
 
 class LabAnalyst(Document):
     def on_update(self):
         self.on_update_after_submit()
     def before_save(self):
-        # if self.excel_file and not self.test_details_physical:
         self.create_physical_details_from_excel()
         self.create_test_details_metallography()
-            
+        self.read_pdf_and_fill_table()
+        # self.create_rate_chart_from_pdf()
      
         for row in self.test_details: 
             if not row.value:
                 continue
             value = float(row.value)
-            min_range = float(row.method_min_range)
-            max_range = float(row.method_max_range)
+            min_range = float(row.method_min_range or 0)
+            max_range = float(row.method_max_range or 0)
             row.status = "NABL" if min_range < value < max_range else "NON NABL"
-# ***********************************************************************************************
+# **********************************************************************************************
+    @frappe.whitelist()
+    def read_pdf_and_fill_table(self):
+        if not self.pdf_file:
+            return
+        try:
+            from PyPDF2 import PdfReader
+        except ImportError:
+            frappe.throw("PyPDF2 library is not installed on server")
+        # Clear child table
+        self.test_details_physical = []
+
+        file_doc = frappe.get_doc("File", {"file_url": self.pdf_file})
+        pdf_path = file_doc.get_full_path()
+
+        reader = PdfReader(pdf_path)
+        text = ""
+
+        for page in reader.pages:
+            page_text = page.extract_text()
+            if page_text:
+                text += page_text + "\n"
+
+        skip_params = [
+            "input data","output data","tested by","stress rate","stress vs. strain","tensile test report","machine model",
+            "machine serial no","customer name","order no.","lot no.","customer address","test type","heat no.","date & time"
+        ]
+        skip_value_keywords = [
+            "output data",
+            "input data",
+            "tensile test report"
+        ]
+        added_params = set()
+        for line in text.split("\n"):
+            if ":" not in line:
+                continue
+            param, val = line.split(":", 1)
+            param = param.strip()
+            val = val.strip() 
+            lower_val = val.lower()
+            for word in skip_value_keywords:
+                if word in lower_val:
+                    val = val[:lower_val.index(word)].strip()
+                    break
+             # blank allowed
+            if not param:
+                continue
+            # skip headings / junk
+            normalized_param = param.lower().replace(".", "").strip()
+            if normalized_param in [p.replace(".", "").strip() for p in skip_params]:
+                continue
+            # avoid duplicate parameters
+            if param.lower() in added_params:
+                continue
+            uom = ""
+            if val:
+                match = re.match(r"^\s*([-+]?\d*\.?\d+)\s*([a-zA-Z/%²³]*)", val)
+                if match:
+                    val = match.group(1)
+                    uom = match.group(2).strip()
+            self.append("test_details_physical", {
+                "parameter": param,
+                "value": val,
+                "uom": uom
+            })
+            added_params.add(normalized_param)
+#*********************************************************************************************************
+
+        # save document
+        # self.save(ignore_permissions=True)
+
+    # @frappe.whitelist()
+    # def create_rate_chart_from_pdf(self):
+    #     if not self.upload_pdf_file:
+    #         return
+    #     file_name = frappe.db.get_value("File", {"file_url": self.upload_pdf_file}, "name")
+    #     file_doc = frappe.get_doc("File", file_name)
+    #     file_content = file_doc.get_content()
+    #     existing = {row.parameter: row for row in self.test_details if row.parameter}
+    #     import pdfplumber, io
+    #     with pdfplumber.open(io.BytesIO(file_content)) as pdf:
+    #         for page in pdf.pages:
+    #             text = page.extract_text()
+    #             if not text:
+    #                 continue
+                # for line in text.split("\n"):
+                #     if "Parameter" in line and "Value" in line:
+                #         continue
+                #     parts = line.split()
+                #     if len(parts) < 2:
+                #         continue
+                #     param = " ".join(parts[:-1])
+                #     val = parts[-1]
+
+                #     if param in existing:
+                #         existing[param].value = val
+                #     else:
+                #         self.append("test_details", {"parameter": param, "value": val})
+
+    #********************************************************************************************************
     @frappe.whitelist()
     def create_rate_chart_from_excel(self):
         if not self.upload_excel_file:
@@ -180,11 +281,20 @@ class LabAnalyst(Document):
     def add_data(self):
         readings = [self.row1, self.row2, self.row3, self.row4, self.row5, self.row6]
         valid_readings = [r for r in readings if r not in (None, "", 0)]
-
-        # Calculate average only if values exist
         avg = sum(valid_readings) / len(valid_readings) if valid_readings else 0
-        # data = self.r1 + self.r2 + self.r3 + self.r4 + self.r5 + self.r6
-        # avg = data
+        for row in self.brinell_hardness_child:
+            if (
+                row.location == self.location and
+                row.test == self.test and
+                row.scale == self.scale and
+                row.load == self.load and
+                row.dial == self.dial and
+                row.indentor == self.indentor and
+                row.min == self.min and
+                row.max == self.max and
+                row.avg == avg
+            ):
+                frappe.throw("Same data already exists in table. No changes detected.")
         self.append("brinell_hardness_child", {
             "location": self.location,
             "test": self.test,
@@ -196,6 +306,7 @@ class LabAnalyst(Document):
             "max": self.max,
             "avg": avg
         })
+
 #**********************************************************************************************************
     @frappe.whitelist()
     def get_avg_absorbed_energy(self):
@@ -211,29 +322,32 @@ class LabAnalyst(Document):
     def on_update_after_submit(self):
         self.db_set("test_completion_date", nowdate())
         self.db_set("test_completion_time", nowtime())
-#***`*******************************************************************************************************
+#*******************************************************************************************************
     @frappe.whitelist()
     def update_metallography_rows(self):
         qty = cint(self.no_of_fields or 0)
         existing = len(self.metallography_test_pp or [])
-
-        # add rows
         if qty > existing:
             for _ in range(qty - existing):
                 self.append("metallography_test_pp", {})
-
-        # remove extra rows
         elif qty < existing:
             self.set(
                 "metallography_test_pp",
                 self.metallography_test_pp[:qty]
             )
-
         return qty
-
 #**************************************************************************************************
-
-
-
-
-    
+    # @frappe.whitelist()
+    # def update_metallography_test_table_rows(self):
+    #     qty=cint(self.no_of_field or 0)
+    #     existing = len(self.metallography_test_table or [])
+    #     if qty > existing:
+    #         for _ in range(qty - existing):
+    #             self.append("metallography_test_table", {})
+    #     elif qty < existing:
+    #         self.set(
+    #             "metallography_test_table",
+    #             self.metallography_test_table[:qty]
+    #         )
+    #     return qty
+#**************************************************************************************************

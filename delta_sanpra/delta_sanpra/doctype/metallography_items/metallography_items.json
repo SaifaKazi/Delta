@@ -1,31 +1,37 @@
 {
  "actions": [],
  "allow_rename": 1,
- "creation": "2025-12-17 16:28:17.338993",
+ "creation": "2025-11-27 12:13:45.665331",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "range"
+  "parameter",
+  "value"
  ],
  "fields": [
   {
-   "fieldname": "range",
-   "fieldtype": "Float",
+   "fieldname": "parameter",
+   "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Range",
-   "precision": "1"
+   "label": "Parameter"
+  },
+  {
+   "fieldname": "value",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Value"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2025-12-17 16:30:18.193691",
+ "modified": "2025-12-29 13:12:27.266456",
  "modified_by": "Administrator",
  "module": "Delta Sanpra",
- "name": "Absorbed Energy in Joules of Each Specimen",
- "owner": "Administrator",
+ "name": "Metallography Items",
+ "owner": "saifa@sanpra.co.in",
  "permissions": [],
  "row_format": "Dynamic",
  "sort_field": "modified",

@@ -13,7 +13,9 @@
   "column_break_rgie",
   "max_range",
   "column_break_euev",
-  "value"
+  "value",
+  "column_break_gcqe",
+  "uom"
  ],
  "fields": [
   {
@@ -57,13 +59,23 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Result"
+  },
+  {
+   "fieldname": "column_break_gcqe",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "uom",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "UOM"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2025-11-11 20:06:18.835801",
+ "modified": "2026-01-21 17:06:33.514971",
  "modified_by": "Administrator",
  "module": "Delta Sanpra",
  "name": "Test Details Physical",

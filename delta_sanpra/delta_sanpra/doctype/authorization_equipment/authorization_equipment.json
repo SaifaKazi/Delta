@@ -1,37 +1,35 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "format:{material_type}",
- "creation": "2025-11-18 15:35:30.914893",
+ "autoname": "field:title",
+ "creation": "2025-12-06 13:13:25.331393",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "material_type",
-  "sample_preparation_charges"
+  "title",
+  "authorization_equipment_template"
  ],
  "fields": [
   {
-   "fieldname": "material_type",
+   "fieldname": "title",
    "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Material Type",
-   "reqd": 1
+   "label": "Title",
+   "unique": 1
   },
   {
-   "fieldname": "sample_preparation_charges",
-   "fieldtype": "Table",
-   "label": "Sample Preparation Charges",
-   "options": "Cutting Charges Items"
+   "fieldname": "authorization_equipment_template",
+   "fieldtype": "Text Editor",
+   "label": "Authorization Equipment Template"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-01-20 10:59:41.917094",
+ "modified": "2025-12-29 13:10:56.426163",
  "modified_by": "Administrator",
  "module": "Delta Sanpra",
- "name": "Material Type",
- "naming_rule": "Expression",
+ "name": "Authorization Equipment",
+ "naming_rule": "By fieldname",
  "owner": "saifa@sanpra.co.in",
  "permissions": [
   {

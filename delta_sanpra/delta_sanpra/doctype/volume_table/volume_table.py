@@ -5,5 +5,5 @@
 from frappe.model.document import Document
 
 
-class AbsorbedEnergyinJoulesofEachSpecimen(Document):
+class VolumeTable(Document):
 	pass
