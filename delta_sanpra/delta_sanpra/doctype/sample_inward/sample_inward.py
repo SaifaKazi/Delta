@@ -171,50 +171,60 @@ class SampleInward(Document):
         self.cutting_charge = []
         self.machining_charge = []
 
+        def get_charge(material_type_doc, proc_name, dia):
+            for r in material_type_doc.sample_preparation_charges:
+                if r.processing_charges != proc_name:
+                    continue
+                if cint(r.is_fix) == 1:
+                    return r.charges
+                if r.from_range <= dia <= r.to_range:
+                    return r.charges
+            return 0
+
         for row in self.material_details:
             if not row.material_dimension:
                 continue
 
             dia = float(row.material_dimension)
-            if dia < 50:
-                continue
-
             item = frappe.get_doc("Item", row.material_specification)
             material_type = item.custom_material_types
             if not material_type:
                 continue
 
-            half_dia = dia / 2
             material_type_doc = frappe.get_doc("Material Type", material_type)
 
-            # ---------------- CUTTING CHARGE ----------------
-            for d in [dia, half_dia]:
-                charge = 0
-                for r in material_type_doc.sample_preparation_charges:
-                    if r.processing_charges == "Cutting Charges" and r.from_range <= d <= r.to_range:
-                        charge = r.charges
-                        break
-
-                self.append("cutting_charge", {
-                    "material": row.material_specification,
-                    "material_type": material_type,
-                    "thik_dia": d,
-                    "processing_charges": "Cutting Charges",
-                    "total": charge
-                })
-
-            # ---------------- MACHINING CHARGE ----------------
-            for r in material_type_doc.sample_preparation_charges:
-                if r.processing_charges != "Cutting Charges" and r.from_range <= half_dia <= r.to_range:
-                    self.append("machining_charge", {
+            # CUTTING CHARGE
+            if dia >= 50:
+                for d in [dia, dia / 2]:
+                    charge = get_charge(material_type_doc, "Cutting Charges", d)
+                    self.append("cutting_charge", {
+                        "material": row.material_specification,
                         "material_type": material_type,
-                        "materials": row.material_specification,
-                        "thik_dia": half_dia,
-                        "processing_charges": r.processing_charges,
-                        "charge": r.charges
+                        "thik_dia": d,
+                        "processing_charges": "Cutting Charges",
+                        "total": charge
                     })
+
+            # MACHINING CHARGE
+            check_dia = dia / 2 if dia >= 50 else dia
+            proc = ""
+            charge = 0
+
+            for r in material_type_doc.sample_preparation_charges:
+                if r.processing_charges == "Cutting Charges":
+                    continue
+                if cint(r.is_fix) == 1 or (r.from_range <= check_dia <= r.to_range):
+                    proc = r.processing_charges
+                    charge = r.charges
                     break
 
-        return len(self.cutting_charge)
+            self.append("machining_charge", {
+                "material_type": material_type,
+                "materials": row.material_specification,
+                "thik_dia": check_dia,
+                "processing_charges": proc,
+                "charge": charge
+            })
 #*************************************************************************************************
+
 

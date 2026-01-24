@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "hash",
+ "autoname": "naming_series:",
  "creation": "2025-10-28 12:22:46.272135",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -10,7 +10,8 @@
   "test_method",
   "column_break_dypw",
   "rate",
-  "is_default"
+  "is_default",
+  "naming_series"
  ],
  "fields": [
   {
@@ -45,16 +46,23 @@
    "fieldname": "is_default",
    "fieldtype": "Check",
    "label": "Is Default"
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Naming Series",
+   "options": "TDES.##",
+   "read_only": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-01-22 11:24:35.633600",
+ "modified": "2026-01-23 13:42:04.971706",
  "modified_by": "Administrator",
  "module": "Delta Sanpra",
  "name": "Test Description",
- "naming_rule": "Random",
+ "naming_rule": "By \"Naming Series\" field",
  "owner": "Administrator",
  "permissions": [
   {

@@ -208,26 +208,23 @@ frappe.ui.form.on("Test On sample", {
         });
 
     },
-    test_description: function (frm, cdt, cdn) {
-        let child = locals[cdt][cdn];
-
-        if (child.test_description) {
-            frappe.db.get_value("Test Description", child.test_description, "rate", (r) => {
-                if (r && r.rate) {
-                    frappe.model.set_value(cdt, cdn, "price", r.rate);
-                } else {
-                    frappe.model.set_value(cdt, cdn, "price", 0);
-                }
-            });
-        }
-        else {
-            frappe.model.set_value(cdt, cdn, "price", 0);
-        }
+  test_description: function (frm, cdt, cdn) {
+     let child = locals[cdt][cdn]; is_default == true; 
+     if (child.test_description) {
+         frappe.db.get_value("Test Description", child.test_description, "rate", (r) => { 
+            if (r && r.rate) { 
+                frappe.model.set_value(cdt, cdn, "price", r.rate); 
+            } else { 
+                frappe.model.set_value(cdt, cdn, "price", 0); 
+            } 
+        }); 
+    } else {
+         frappe.model.set_value(cdt, cdn, "price", 0); 
+        } 
     }
 });
 // **************************************************************************************************
 frappe.ui.form.on("Machining Charge", {
-
     processing_charges(frm, cdt, cdn) {
         let row = locals[cdt][cdn];
         if (!row.processing_charges || !row.material_type || !row.thik_dia) return;
@@ -242,13 +239,21 @@ frappe.ui.form.on("Machining Charge", {
                 if (!r.message) return;
 
                 let charge = 0;
-                (r.message.sample_preparation_charges || []).forEach(d => {
-                    if (
-                        d.processing_charges === row.processing_charges &&
-                        row.thik_dia >= d.from_range &&
-                        row.thik_dia <= d.to_range
-                    ) {
+
+                (r.message.sample_preparation_charges || []).some(d => {
+                    if (d.processing_charges !== row.processing_charges) {
+                        return false;
+                    }
+
+                    // IF-ELSE Structure
+                    if (d.is_fix) {
                         charge = d.charges;
+                        return true;
+                    } else if (row.thik_dia >= d.from_range && row.thik_dia <= d.to_range) {
+                        charge = d.charges;
+                        return true;
+                    } else {
+                        return false;
                     }
                 });
 
@@ -257,7 +262,6 @@ frappe.ui.form.on("Machining Charge", {
             }
         });
     },
-
     charge(frm, cdt, cdn) {
         calculate_total(cdt, cdn);
     },
