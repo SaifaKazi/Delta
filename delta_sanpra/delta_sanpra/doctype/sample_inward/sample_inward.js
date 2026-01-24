@@ -11,6 +11,7 @@ function validate_challan_date(frm) {
         frappe.msgprint("Challan Date cannot be greater than date");
     }
 }
+
 frappe.ui.form.on("Sample Inward", {
     date(frm) {
         validate_challan_date(frm);
