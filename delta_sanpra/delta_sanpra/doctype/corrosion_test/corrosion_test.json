@@ -2,17 +2,17 @@
  "actions": [],
  "allow_rename": 1,
  "autoname": "field:test_group",
- "creation": "2026-01-28 14:37:03.827082",
+ "creation": "2026-01-28 14:33:50.180425",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "section_break_34j4",
+  "section_break_byfq",
   "amended_from",
   "test_group"
  ],
  "fields": [
   {
-   "fieldname": "section_break_34j4",
+   "fieldname": "section_break_byfq",
    "fieldtype": "Section Break"
   },
   {
@@ -20,7 +20,7 @@
    "fieldtype": "Link",
    "label": "Amended From",
    "no_copy": 1,
-   "options": "Metallography Test",
+   "options": "Corrosion Test",
    "print_hide": 1,
    "read_only": 1,
    "search_index": 1
@@ -37,12 +37,12 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-01-28 15:18:29.682106",
+ "modified": "2026-01-28 15:20:49.946993",
  "modified_by": "Administrator",
  "module": "Delta Sanpra",
- "name": "Metallography Test",
+ "name": "Corrosion Test",
  "naming_rule": "By fieldname",
- "owner": "Administrator",
+ "owner": "saifa@sanpra.co.in",
  "permissions": [
   {
    "create": 1,

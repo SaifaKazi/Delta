@@ -40,9 +40,9 @@
   "thickness_of_sample",
   "outer_diameter",
   "diameter_of_sample",
-  "room_temp",
   "craddle_no",
   "corrosion_rate_mmmonth",
+  "test_temp",
   "column_break_hsnc",
   "sample_preparations",
   "location_of_test",
@@ -62,6 +62,7 @@
   "weight_loss",
   "corrosion_rate__milsyear",
   "sensitization_treatement_options",
+  "room_temp",
   "column_break_jqez",
   "test_solution",
   "magnification",
@@ -89,10 +90,6 @@
   "table_icqf",
   "table_ivqf",
   "observations",
-  "add_photographs_section",
-  "image",
-  "column_break_beku",
-  "image_description",
   "section_break_dume",
   "customer_specification",
   "column_break_qvzk",
@@ -557,7 +554,7 @@
    "fieldname": "metallography_test_table",
    "fieldtype": "Table",
    "label": "Metallography Test Table",
-   "options": "Metallography Test"
+   "options": "Metallography Test Table"
   },
   {
    "fieldname": "test",
@@ -1213,7 +1210,7 @@
   },
   {
    "default": "Select Sample Preparation",
-   "depends_on": "eval: (\r\n  doc.test_group !== \"Metallography Test\" &&\r\n  doc.test_group !== \"Chemical\" &&\r\n  doc.test_method !== \"Rebend Test IS 1786 Amd. 4 :  2019\" &&\r\n  doc.test_method !== \"Tensile Test ASTM E8/E8M : 25\" &&\r\n  doc.test_method !== \"IGC: ASTM A262:15(2021) Practice A\"\r\n    \r\n) ||\r\ndoc.test_method == \"IGC: ASTM A262:15(2021) Practice C\"",
+   "depends_on": "eval: (\r\n  doc.test_group !== \"Metallography Test\" &&\r\n  doc.test_group !== \"Chemical\" &&\r\n  doc.test_method !== \"Rebend Test IS 1786 Amd. 4 :  2019\" &&\r\n  doc.test_method !== \"Tensile Test ASTM E8/E8M : 25\" &&\r\n  doc.test_method !== \"IGC: ASTM A262:15(2021) Practice A\" &&\r\n  doc.test_method !== \"Salt Spray Test-ISO 9227:2022 (Amd 1:2024)\"\r\n    \r\n) ||\r\ndoc.test_method == \"IGC: ASTM A262:15(2021) Practice C\"",
    "fieldname": "sample_preparations",
    "fieldtype": "Select",
    "label": "Sample Preparation",
@@ -1490,40 +1487,20 @@
    "options": "Observation"
   },
   {
-   "depends_on": "eval:doc.test_method == \"Salt Spray Test-ISO 9227:2022 (Amd 1:2024)\" ||\ndoc.test_method == \"Salt Spray Test - ASTM B117-25\"",
-   "fieldname": "add_photographs_section",
-   "fieldtype": "Section Break",
-   "label": "Add Photographs"
-  },
-  {
-   "fieldname": "image",
-   "fieldtype": "Attach Image",
-   "label": "Image"
-  },
-  {
-   "fieldname": "column_break_beku",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "image_description",
-   "fieldtype": "Data",
-   "label": "Image Description"
-  },
-  {
-   "depends_on": "eval:\n(\n    doc.test_method == \"Salt Spray Test-ISO 9227:2022 (Amd 1:2024)\" ||\n    doc.test_method == \"ISO 3651-2:1998 Method A\" ||\n    doc.test_method == \"IGC: ASTM A262:15(2021) Practice E\" ||\n    doc.test_method == \"IGC: ASTM A262:15(2021) Practice B\" ||\n    doc.test_method == \"ASTM G28 : 24 Method A\"\n) &&\ndoc.test_group !== \"Chemical\"\n",
+   "depends_on": "eval:\n(\n    doc.test_method == \"ISO 3651-2:1998 Method A\" ||\n    doc.test_method == \"Tensile Test ASTM E8/E8M : 25\" ||\n    doc.test_method == \"IGC: ASTM A262:15(2021) Practice E\" ||\n    doc.test_method == \"IGC: ASTM A262:15(2021) Practice B\" ||\n    doc.test_method == \"IGC: ASTM A262:15(2021) Practice A\" ||\n    doc.test_method == \"ASTM G28 : 24 Method A\" ||\n    doc.test_method == \"ASTM G48 : 25 Method A\"\n    ) &&\ndoc.test_group !== \"Chemical\"\n",
    "fieldname": "test_started_datetime",
    "fieldtype": "Datetime",
    "label": "Test Started DateTime"
   },
   {
-   "depends_on": "eval:doc.test_method == \"ISO 3651-2:1998 Method A\" ||\ndoc.test_method == \"IGC: ASTM A262:15(2021) Practice E\" ||\ndoc.test_method == \"IGC: ASTM A262:15(2021) Practice C\" ||\ndoc.test_method == \"IGC: ASTM A262:15(2021) Practice B\" ||\ndoc.test_method == \"ASTM G28 : 24 Method A\"",
+   "depends_on": "eval:doc.test_method == \"ISO 3651-2:1998 Method A\" ||\ndoc.test_method == \"IGC: ASTM A262:15(2021) Practice E\" ||\ndoc.test_method == \"IGC: ASTM A262:15(2021) Practice C\" ||\ndoc.test_method == \"IGC: ASTM A262:15(2021) Practice B\" ||\ndoc.test_method == \"ASTM G28 : 24 Method A\" ||\ndoc.test_method == \"ASTM G48 : 25 Method A\"",
    "fieldname": "test_solution",
    "fieldtype": "Select",
    "label": "Test Solution",
    "options": "Select Test Solution\n10% Ferric chloride(Fecl3)\n10% Ferric chloride(Fecl3) by mass\n5% FeCl3 and 1% NaNO3 by weight\n6 % FeCl (Fecl3)by mass and 1 % HCl (acidified ferric chloride)\n6% Ferric Chloride with pH 1.3\n6% Ferric Chloride(Fecl3)\n6% Ferric Chloride(Fecl3) by mass\n6% Ferric Chloride(Fecl3) by mass with pH value 1\n65% Boiling Nitric Acid\nCopper-Copper Sulphate-16% Sulphuric Acid\nCopper\u2013Copper Sulfate-50% Sulphuric Acid\nFerric Sulphate-50% Sulphuric Acid"
   },
   {
-   "depends_on": "eval:\n    doc.test_method == \"Salt Spray Test-ISO 9227:2022 (Amd 1:2024)\" ||\n    doc.test_method == \"ISO 3651-2:1998 Method A\" ||\n    doc.test_method == \"IGC: ASTM A262:15(2021) Practice E\" ||\n    doc.test_method == \"IGC: ASTM A262:15(2021) Practice C\" ||\n    doc.test_method == \"IGC: ASTM A262:15(2021) Practice B\" ||\n    doc.test_method == \"ASTM G28 : 24 Method A\"\n",
+   "depends_on": "eval:\n    doc.test_method == \"ISO 3651-2:1998 Method A\" ||\n    doc.test_method == \"IGC: ASTM A262:15(2021) Practice E\" ||\n    doc.test_method == \"IGC: ASTM A262:15(2021) Practice C\" ||\n    doc.test_method == \"IGC: ASTM A262:15(2021) Practice B\" ||\n    doc.test_method == \"ASTM G28 : 24 Method A\" ||\n    doc.test_method == \"ASTM G48 : 25 Method A\"\n",
    "fieldname": "test_duration_hrs",
    "fieldtype": "Float",
    "label": "Test Duration Hrs",
@@ -1544,55 +1521,55 @@
    "options": "Select Specimen Degreasing\nImmersion in Acetone"
   },
   {
-   "depends_on": "eval:\n    doc.test_method == \"Salt Spray Test-ISO 9227:2022 (Amd 1:2024)\" ||\n    doc.test_method == \"ISO 3651-2:1998 Method A\" ||\n    doc.test_method == \"IGC: ASTM A262:15(2021) Practice E\" ||\n    doc.test_method == \"IGC: ASTM A262:15(2021) Practice C\" ||\n    doc.test_method == \"IGC: ASTM A262:15(2021) Practice B\" ||\n        doc.test_method == \"ASTM G28 : 24 Method A\"",
+   "depends_on": "eval:\n    doc.test_method == \"ISO 3651-2:1998 Method A\" ||\n    doc.test_method == \"IGC: ASTM A262:15(2021) Practice E\" ||\n    doc.test_method == \"IGC: ASTM A262:15(2021) Practice C\" ||\n    doc.test_method == \"IGC: ASTM A262:15(2021) Practice B\" ||\n        doc.test_method == \"ASTM G28 : 24 Method A\"",
    "fieldname": "thickness_of_sample",
    "fieldtype": "Data",
    "label": "Thickness of Sample (cm)"
   },
   {
-   "depends_on": "eval:\n    doc.test_method == \"Salt Spray Test-ISO 9227:2022 (Amd 1:2024)\" ||\n    doc.test_method == \"ISO 3651-2:1998 Method A\" ||\n    doc.test_method == \"IGC: ASTM A262:15(2021) Practice E\" ||\n    doc.test_method == \"IGC: ASTM A262:15(2021) Practice B\" ||\n        doc.test_method == \"ASTM G28 : 24 Method A\"",
+   "depends_on": "eval:\n    doc.test_method == \"ISO 3651-2:1998 Method A\" ||\n    doc.test_method == \"IGC: ASTM A262:15(2021) Practice E\" ||\n    doc.test_method == \"IGC: ASTM A262:15(2021) Practice B\" ||\n        doc.test_method == \"ASTM G28 : 24 Method A\"",
    "fieldname": "length_of_sample",
    "fieldtype": "Data",
    "label": "Length of Sample (cm)"
   },
   {
-   "depends_on": "eval:\n    doc.test_method == \"Salt Spray Test-ISO 9227:2022 (Amd 1:2024)\" ||\n    doc.test_method == \"ISO 3651-2:1998 Method A\" ||\n    doc.test_method == \"IGC: ASTM A262:15(2021) Practice E\"",
+   "depends_on": "eval:\n    doc.test_method == \"ISO 3651-2:1998 Method A\" ||\n    doc.test_method == \"IGC: ASTM A262:15(2021) Practice E\"",
    "fieldname": "inner_diameter",
    "fieldtype": "Data",
    "label": "Inner Diameter (cm)"
   },
   {
-   "depends_on": "eval:\n    doc.test_method == \"Salt Spray Test-ISO 9227:2022 (Amd 1:2024)\" ||\n    doc.test_method == \"ISO 3651-2:1998 Method A\" ||\n    doc.test_method == \"IGC: ASTM A262:15(2021) Practice E\"",
+   "depends_on": "eval:\n    doc.test_method == \"ISO 3651-2:1998 Method A\" ||\n    doc.test_method == \"IGC: ASTM A262:15(2021) Practice E\"",
    "fieldname": "outer_diameter",
    "fieldtype": "Data",
    "label": "Outer Diameter (cm)"
   },
   {
-   "depends_on": "eval:\n    doc.test_method == \"Salt Spray Test-ISO 9227:2022 (Amd 1:2024)\" ||\n    doc.test_method == \"ISO 3651-2:1998 Method A\" ||\n    doc.test_method == \"IGC: ASTM A262:15(2021) Practice E\" ||\n    doc.test_method == \"IGC: ASTM A262:15(2021) Practice C\" ||\n    doc.test_method == \"IGC: ASTM A262:15(2021) Practice B\" ||\n    doc.test_method == \"ASTM G28 : 24 Method A\"",
+   "depends_on": "eval:\n    doc.test_method == \"ISO 3651-2:1998 Method A\" ||\n    doc.test_method == \"IGC: ASTM A262:15(2021) Practice E\" ||\n    doc.test_method == \"IGC: ASTM A262:15(2021) Practice C\" ||\n    doc.test_method == \"IGC: ASTM A262:15(2021) Practice B\" ||\n    doc.test_method == \"ASTM G28 : 24 Method A\"",
    "fieldname": "width_of_sample",
    "fieldtype": "Float",
    "label": "Width of Sample (cm)"
   },
   {
-   "depends_on": "eval:\n    doc.test_method == \"Salt Spray Test-ISO 9227:2022 (Amd 1:2024)\" ||\n    doc.test_method == \"ISO 3651-2:1998 Method A\" ||\n    doc.test_method == \"IGC: ASTM A262:15(2021) Practice E\"",
+   "depends_on": "eval:\n    doc.test_method == \"ISO 3651-2:1998 Method A\" ||\n    doc.test_method == \"IGC: ASTM A262:15(2021) Practice E\"",
    "fieldname": "angle_of_bends",
    "fieldtype": "Int",
    "label": "Angle of Bend"
   },
   {
-   "depends_on": "eval:\n    doc.test_method == \"Salt Spray Test-ISO 9227:2022 (Amd 1:2024)\" ||\n    doc.test_method == \"ISO 3651-2:1998 Method A\"",
+   "depends_on": "eval:\n    doc.test_method == \"ISO 3651-2:1998 Method A\"",
    "fieldname": "results",
    "fieldtype": "Data",
    "label": "Result"
   },
   {
-   "depends_on": "eval:\n    doc.test_method == \"Salt Spray Test-ISO 9227:2022 (Amd 1:2024)\" ||\n    doc.test_method == \"ISO 3651-2:1998 Method A\" ||\n    doc.test_method == \"IGC: ASTM A262:15(2021) Practice E\" ||\n    doc.test_method == \"IGC: ASTM A262:15(2021) Practice A\"",
+   "depends_on": "eval:\n    doc.test_method == \"ISO 3651-2:1998 Method A\" ||\n    doc.test_method == \"IGC: ASTM A262:15(2021) Practice E\" ||\n    doc.test_method == \"IGC: ASTM A262:15(2021) Practice A\"",
    "fieldname": "magnification",
    "fieldtype": "Data",
    "label": "Magnification"
   },
   {
-   "depends_on": "eval:\n(\n    doc.test_method == \"Salt Spray Test-ISO 9227:2022 (Amd 1:2024)\" ||\n    doc.test_method == \"ISO 3651-2:1998 Method A\" ||\n    doc.test_method == \"Tensile Test ASTM E8/E8M : 25\" ||\n    doc.test_method == \"IGC: ASTM A262:15(2021) Practice E\" ||\n    doc.test_method == \"IGC: ASTM A262:15(2021) Practice B\" ||\n    doc.test_method == \"IGC: ASTM A262:15(2021) Practice A\" ||\n    doc.test_method == \"ASTM G28 : 24 Method A\"\n    ) &&\ndoc.test_group !== \"Chemical\"\n",
+   "depends_on": "eval:\n(\n    doc.test_method == \"ISO 3651-2:1998 Method A\" ||\n    doc.test_method == \"Tensile Test ASTM E8/E8M : 25\" ||\n    doc.test_method == \"IGC: ASTM A262:15(2021) Practice E\" ||\n    doc.test_method == \"IGC: ASTM A262:15(2021) Practice B\" ||\n    doc.test_method == \"IGC: ASTM A262:15(2021) Practice A\" ||\n    doc.test_method == \"ASTM G28 : 24 Method A\" ||\n    doc.test_method == \"ASTM G48 : 25 Method A\"\n    ) &&\ndoc.test_group !== \"Chemical\"\n",
    "fieldname": "test_completion_datetime",
    "fieldtype": "Datetime",
    "label": "Test Completion DateTime"
@@ -1747,7 +1724,7 @@
    "label": "Final Weight of Sample (gm)"
   },
   {
-   "depends_on": "eval:doc.test_method == \"IGC: ASTM A262:15(2021) Practice B\"",
+   "depends_on": "eval:doc.test_method == \"IGC: ASTM A262:15(2021) Practice B\" ||\ndoc.test_method == \"ASTM G28 : 24 Method A\"",
    "fieldname": "weight_loss",
    "fieldtype": "Float",
    "label": "Weight Loss"
@@ -1763,14 +1740,20 @@
    "fieldname": "corrosion_rate__milsyear",
    "fieldtype": "Float",
    "label": "Corrosion Rate  (Mils/Year)"
+  },
+  {
+   "depends_on": "eval:doc.test_method == \"ASTM G28 : 24 Method A\" ||\ndoc.test_method == \"ASTM G48 : 25 Method A\"",
+   "fieldname": "test_temp",
+   "fieldtype": "Float",
+   "label": "Test Temp.(\u00b0C)"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-01-24 17:05:49.914659",
- "modified_by": "saifa@sanpra.co.in",
+ "modified": "2026-01-28 14:36:28.157881",
+ "modified_by": "Administrator",
  "module": "Delta Sanpra",
  "name": "Lab Analyst",
  "naming_rule": "Expression",

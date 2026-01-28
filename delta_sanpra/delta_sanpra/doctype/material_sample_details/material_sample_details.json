@@ -14,6 +14,8 @@
   "discipline",
   "column_break_whfl",
   "group",
+  "column_break_oecc",
+  "test_group_doctype",
   "section_break_ecxr",
   "test_description"
  ],
@@ -73,13 +75,24 @@
    "fieldtype": "Link",
    "label": "Test Description",
    "options": "Test Description"
+  },
+  {
+   "fieldname": "column_break_oecc",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "test_group_doctype",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Test Group Doctype",
+   "options": "DocType"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2025-12-16 20:13:43.877189",
+ "modified": "2026-01-28 15:11:54.297793",
  "modified_by": "Administrator",
  "module": "Delta Sanpra",
  "name": "Material Sample Details",

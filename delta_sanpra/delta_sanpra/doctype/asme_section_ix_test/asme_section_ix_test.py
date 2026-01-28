@@ -5,5 +5,5 @@
 from frappe.model.document import Document
 
 
-class MetallographyTest(Document):
+class ASMESectionIXTest(Document):
 	pass

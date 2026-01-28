@@ -1,9 +1,9 @@
-# Copyright (c) 2026, Sanpra Software Solution and contributors
+# Copyright (c) 2025, Sanpra Software Solution and contributors
 # For license information, please see license.txt
 
 # import frappe
 from frappe.model.document import Document
 
 
-class MetallographyTest(Document):
+class MetallographyTestTable(Document):
 	pass
