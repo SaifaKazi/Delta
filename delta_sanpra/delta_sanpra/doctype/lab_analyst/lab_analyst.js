@@ -170,7 +170,6 @@ frappe.ui.form.on("Metallography Test", {
         }
     }
 });
-
 // *****************************************************************************************************
 frappe.ui.form.on("Test Details", {
     value(frm, cdt, cdn) {
@@ -291,16 +290,21 @@ function calculate_absorbed_energy(frm) {
 }
 //**********************************************************************************************************
 frappe.ui.form.on("Ferrite By Ferritoscope Items", {
-    measurement_1: calc, measurement_2: calc, measurement_3: calc, measurement_4: calc, measurement_5: calc, measurement_6: calc
+    measurement_1: calc,measurement_2: calc,measurement_3: calc,measurement_4: calc,
+    measurement_5: calc,measurement_6: calc
 });
 function calc(frm, cdt, cdn) {
     let row = locals[cdt][cdn];
-    let avg = 0, count = 0, sum = 0;
+    let sum = 0, count = 0;
 
     for (let i = 1; i <= 6; i++) {
-        let val = parseFloat(row["measurement_" + i]) || 0;
-        if (val) { sum += val; count++; }
+        let field = "measurement_" + i;
+
+        if (row[field] !== null && row[field] !== "") {
+            sum += parseFloat(row[field]);
+            count++;
+        }
     }
-    avg = count ? sum / count : 0;
+    let avg = count ? (sum / count) : 0;
     frappe.model.set_value(cdt, cdn, "avg", avg);
 }

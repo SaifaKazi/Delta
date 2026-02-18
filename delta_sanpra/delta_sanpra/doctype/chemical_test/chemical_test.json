@@ -1,19 +1,89 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "field:test_group",
+ "autoname": "format:{inward_number}/{document_id}",
  "creation": "2026-01-28 14:37:57.254969",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
   "section_break_efjj",
+  "date",
+  "inward_number",
+  "witness",
+  "column_break_ynrg",
+  "test_group",
+  "test_method",
+  "material_specification",
+  "column_break_opdj",
+  "mrn",
+  "material_shape",
+  "heat_number",
+  "challan_no",
+  "column_break_zhde",
+  "ulr_no",
+  "is_print",
+  "customer_name",
+  "challan_date",
+  "section_break_rpzr",
+  "sample_location",
+  "column_break_dvtu",
+  "portable_spectro_test_form",
+  "column_break_wweu",
+  "room_tempc",
+  "section_break_dwqy",
+  "serial_number",
+  "name_of_instrument",
+  "brandmake",
+  "column_break_lulg",
+  "model",
+  "loc",
+  "column_break_bcid",
+  "calibration_date",
+  "calibration_due_date",
+  "section_break_ffts",
+  "child_table_id",
+  "column_break_jkng",
+  "document_id",
+  "column_break_ojvo",
   "amended_from",
-  "test_group"
+  "description_section",
+  "customer_specification",
+  "column_break_puxo",
+  "material_description",
+  "column_break_yyqi",
+  "test_description",
+  "column_break_kiqv",
+  "sample_description",
+  "section_break_gqor",
+  "upload_excel_file",
+  "column_break_tunf",
+  "upload_pdf_file",
+  "section_break_jsiu",
+  "test_details_chemical",
+  "pmi_test_table",
+  "section_break_ikot",
+  "remark",
+  "column_break_qtps",
+  "customer_requirement",
+  "witness_name",
+  "status",
+  "observation",
+  "section_break_xiyb",
+  "return",
+  "amendment_remark",
+  "column_break_viwv",
+  "approved",
+  "column_break_abzp",
+  "tested_by",
+  "column_break_vzgk",
+  "authorized_by"
  ],
  "fields": [
   {
+   "collapsible": 1,
    "fieldname": "section_break_efjj",
-   "fieldtype": "Section Break"
+   "fieldtype": "Section Break",
+   "label": "Inward Details"
   },
   {
    "fieldname": "amended_from",
@@ -29,19 +99,366 @@
    "fieldname": "test_group",
    "fieldtype": "Link",
    "label": "Test Group",
-   "options": "Test Group",
-   "unique": 1
+   "options": "Test Group"
+  },
+  {
+   "default": "Today",
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "label": "Date"
+  },
+  {
+   "fieldname": "inward_number",
+   "fieldtype": "Link",
+   "label": "Inward Number",
+   "options": "Sample Inward"
+  },
+  {
+   "fieldname": "heat_number",
+   "fieldtype": "Int",
+   "label": "Heat Number"
+  },
+  {
+   "fieldname": "column_break_ynrg",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "test_method",
+   "fieldtype": "Link",
+   "label": "Test Method",
+   "options": "Test Method"
+  },
+  {
+   "fieldname": "material_specification",
+   "fieldtype": "Link",
+   "label": "Material Specification",
+   "options": "Item"
+  },
+  {
+   "fieldname": "column_break_zhde",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "material_shape",
+   "fieldtype": "Link",
+   "label": "Material Shape",
+   "options": "Material Shape"
+  },
+  {
+   "fieldname": "challan_no",
+   "fieldtype": "Int",
+   "label": "Challan No"
+  },
+  {
+   "fieldname": "customer_name",
+   "fieldtype": "Link",
+   "label": "Customer Name",
+   "options": "Customer"
+  },
+  {
+   "fieldname": "section_break_ffts",
+   "fieldtype": "Section Break",
+   "hidden": 1
+  },
+  {
+   "fieldname": "column_break_jkng",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "document_id",
+   "fieldtype": "Data",
+   "label": " Document Id"
+  },
+  {
+   "fieldname": "column_break_ojvo",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "child_table_id",
+   "fieldtype": "Data",
+   "label": " Child Table Id"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "description_section",
+   "fieldtype": "Section Break",
+   "label": "Description"
+  },
+  {
+   "fieldname": "customer_specification",
+   "fieldtype": "Small Text",
+   "label": " Customer Specification"
+  },
+  {
+   "fieldname": "column_break_puxo",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "material_description",
+   "fieldtype": "Small Text",
+   "label": " Material Description"
+  },
+  {
+   "fieldname": "column_break_yyqi",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "test_description",
+   "fieldtype": "Small Text",
+   "label": " Test Description"
+  },
+  {
+   "fieldname": "column_break_kiqv",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "sample_description",
+   "fieldtype": "Small Text",
+   "label": " Sample Description"
+  },
+  {
+   "fieldname": "section_break_ikot",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "remark",
+   "fieldtype": "Small Text",
+   "label": "Remark"
+  },
+  {
+   "fieldname": "column_break_qtps",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "customer_requirement",
+   "fieldtype": "Data",
+   "label": "Customer Requirement"
+  },
+  {
+   "fieldname": "witness_name",
+   "fieldtype": "Data",
+   "label": "Witness Name"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Select Status\nClose\nIn Process\nOpen"
+  },
+  {
+   "fieldname": "observation",
+   "fieldtype": "Data",
+   "label": "Observation"
+  },
+  {
+   "depends_on": "eval:\ndoc.test_method !== \"Chemical Test ASTM E1476 : 04(2022)\" &&\ndoc.portable_spectro_test_form == \"0\" ",
+   "fieldname": "section_break_gqor",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "upload_pdf_file",
+   "fieldtype": "Attach",
+   "hidden": 1,
+   "label": "Upload PDF File"
+  },
+  {
+   "fieldname": "column_break_tunf",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "upload_excel_file",
+   "fieldtype": "Attach",
+   "label": "Upload Excel File"
+  },
+  {
+   "fieldname": "section_break_jsiu",
+   "fieldtype": "Section Break"
+  },
+  {
+   "depends_on": "eval:doc.portable_spectro_test_form == \"0\" &&\ndoc.test_method !== \"Chemical Test ASTM E1476 : 04(2022)\"",
+   "fieldname": "test_details_chemical",
+   "fieldtype": "Table",
+   "label": "Test Details Chemical",
+   "options": "Test Details"
+  },
+  {
+   "fieldname": "section_break_rpzr",
+   "fieldtype": "Section Break"
+  },
+  {
+   "depends_on": "eval: (\n    doc.test_group == \"Chemical\"\n) && (\n    doc.portable_spectro_test_form == \"0\" &&\n    doc.test_method !== \"Chemical Test ASTM E1476 : 04(2022)\"\n)",
+   "fieldname": "sample_location",
+   "fieldtype": "Data",
+   "label": "Sample Location"
+  },
+  {
+   "default": "0",
+   "depends_on": "eval:doc.test_method == \"Chemical Test ASTM E415-21\" ||\ndoc.test_method == \"Chemical Test ASTM E1086-22\"",
+   "fieldname": "portable_spectro_test_form",
+   "fieldtype": "Check",
+   "label": "Portable Spectro Test Form"
+  },
+  {
+   "depends_on": "eval: (\n    doc.test_group == \"Chemical\"\n) && (\n    doc.test_method !== \"Chemical Test ASTM E1476 : 04(2022)\" &&\n    doc.portable_spectro_test_form == \"0\"\n)",
+   "fieldname": "room_tempc",
+   "fieldtype": "Float",
+   "label": "Room Temp.(\u00b0C)"
+  },
+  {
+   "depends_on": "eval: (\n    doc.portable_spectro_test_form == \"1\" ||\n    doc.test_method == \"Chemical Test ASTM E1476 : 04(2022)\"\n)",
+   "fieldname": "section_break_dwqy",
+   "fieldtype": "Section Break"
+  },
+  {
+   "depends_on": "eval:doc.test_method !== \"Chemical Test ASTM E1476 : 04(2022)\"",
+   "fieldname": "name_of_instrument",
+   "fieldtype": "Data",
+   "label": "Name of Instrument"
+  },
+  {
+   "fieldname": "column_break_dvtu",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.test_method == \"Chemical Test ASTM E1476 : 04(2022)\"",
+   "fieldname": "serial_number",
+   "fieldtype": "Int",
+   "label": "Serial Number"
+  },
+  {
+   "depends_on": "eval:doc.test_method == \"Chemical Test ASTM E1476 : 04(2022)\"",
+   "fieldname": "loc",
+   "fieldtype": "Data",
+   "label": "LOC"
+  },
+  {
+   "fieldname": "column_break_lulg",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.test_method == \"Chemical Test ASTM E1476 : 04(2022)\"",
+   "fieldname": "calibration_due_date",
+   "fieldtype": "Date",
+   "label": "Calibration Due Date"
+  },
+  {
+   "fieldname": "column_break_bcid",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.test_method == \"Chemical Test ASTM E1476 : 04(2022)\"",
+   "fieldname": "pmi_test_table",
+   "fieldtype": "Table",
+   "label": "PMI Test Table",
+   "options": "PMI Test Table"
+  },
+  {
+   "depends_on": "eval: doc.portable_spectro_test_form == \"0\"\n",
+   "fieldname": "brandmake",
+   "fieldtype": "Data",
+   "label": "Brand/Make"
+  },
+  {
+   "fieldname": "model",
+   "fieldtype": "Data",
+   "label": "Model"
+  },
+  {
+   "fieldname": "calibration_date",
+   "fieldtype": "Date",
+   "label": "Calibration Date"
+  },
+  {
+   "fieldname": "witness",
+   "fieldtype": "Select",
+   "label": "Witness",
+   "options": "\nYes\nNo"
+  },
+  {
+   "fieldname": "column_break_opdj",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "mrn",
+   "fieldtype": "Data",
+   "label": "MRN"
+  },
+  {
+   "fieldname": "ulr_no",
+   "fieldtype": "Data",
+   "label": "ULR No."
+  },
+  {
+   "default": "0",
+   "fieldname": "is_print",
+   "fieldtype": "Check",
+   "label": "Is Print"
+  },
+  {
+   "fieldname": "challan_date",
+   "fieldtype": "Date",
+   "label": "Challan Date"
+  },
+  {
+   "fieldname": "column_break_wweu",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_xiyb",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "return",
+   "fieldtype": "Attach",
+   "label": "Return"
+  },
+  {
+   "fieldname": "amendment_remark",
+   "fieldtype": "Data",
+   "label": "Amendment Remark"
+  },
+  {
+   "fieldname": "column_break_viwv",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "approved",
+   "fieldtype": "Check",
+   "label": "Approved"
+  },
+  {
+   "fieldname": "column_break_abzp",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "tested_by",
+   "fieldtype": "Link",
+   "label": " Tested By ",
+   "link_filters": "[[\"Employee\",\"custom_authorized_by\",\"=\",\"Tested By\"]]",
+   "options": "Employee"
+  },
+  {
+   "fieldname": "column_break_vzgk",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "authorized_by",
+   "fieldtype": "Link",
+   "label": "Authorized By",
+   "link_filters": "[[\"Employee\",\"custom_authorized_by\",\"=\",\"Authorized By\"]]",
+   "options": "Employee"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-01-28 15:17:09.571665",
+ "modified": "2026-02-14 18:44:39.996798",
  "modified_by": "Administrator",
  "module": "Delta Sanpra",
  "name": "Chemical Test",
- "naming_rule": "By fieldname",
+ "naming_rule": "Expression (old style)",
  "owner": "Administrator",
  "permissions": [
   {

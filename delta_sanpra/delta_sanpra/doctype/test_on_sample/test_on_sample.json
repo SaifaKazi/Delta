@@ -14,6 +14,7 @@
   "column_break_xyfw",
   "test_method",
   "test_description",
+  "sample_id_heat_no",
   "column_break_pxsb",
   "heat_number",
   "material_shape",
@@ -56,13 +57,6 @@
    "label": "Test Method",
    "options": "Test Method",
    "reqd": 1
-  },
-  {
-   "fieldname": "customer_specification",
-   "fieldtype": "Small Text",
-   "hidden": 1,
-   "in_list_view": 1,
-   "label": "Customer Specification"
   },
   {
    "fieldname": "test_description",
@@ -187,19 +181,31 @@
    "fieldname": "sample_idtest_id",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Sample/Test "
+   "label": "Sample Id/Test Id",
+   "read_only": 1
   },
   {
    "fieldname": "material_description",
    "fieldtype": "Small Text",
    "label": "Material Description"
+  },
+  {
+   "fieldname": "customer_specification",
+   "fieldtype": "Link",
+   "label": "Customer Requirement",
+   "options": "Customer Requirement"
+  },
+  {
+   "fieldname": "sample_id_heat_no",
+   "fieldtype": "Data",
+   "label": "Sample Id (Heat No)"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2026-01-22 11:27:19.666912",
+ "modified": "2026-02-18 16:01:33.556746",
  "modified_by": "Administrator",
  "module": "Delta Sanpra",
  "name": "Test On sample",

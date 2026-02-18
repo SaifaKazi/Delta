@@ -1,7 +1,6 @@
 // Copyright (c) 2025, Sanpra Software Solution and contributors
 // For license information, please see license.txt
 
-// let items = []
 let item1 = []
 let description = []
 function validate_challan_date(frm) {
@@ -11,7 +10,7 @@ function validate_challan_date(frm) {
         frappe.msgprint("Challan Date cannot be greater than date");
     }
 }
-
+// **************************************************************************************************
 frappe.ui.form.on("Sample Inward", {
     date(frm) {
         validate_challan_date(frm);
@@ -41,28 +40,27 @@ frappe.ui.form.on("Sample Inward", {
                 }
             };
         });
-        frm.set_query("test_method", "test_on_sample", function () {
+        frm.set_query("test_method", "test_on_sample", function(doc, cdt, cdn) {
+            let row = locals[cdt][cdn];
             return {
-                filters: [
-                    ["Test Method", "name", "in", item1]
-                ]
-            }
+                filters: {
+                    test_group: row.test_group
+                }
+            };
         });
-        frm.set_query("test_description", "test_on_sample", function () {
+        frm.set_query("test_description", "test_on_sample", function(doc, cdt, cdn) {
+            let row = locals[cdt][cdn];
             return {
-                filters: [
-                    ["Test Description", "name", "in", description]
-                ]
-            }
+                filters: {
+                    test_method: row.test_method
+                }
+            };
         });
+
     },
     onload(frm) {
         frm.page.sidebar.hide();
-        // frm.doc.material_details.forEach(row => {
-        //     if (row.material_specification) {
-        //         items.push(row.material_specification);
-        //     }
-        // })
+        
     },
     get_sample(frm) {
         frappe.call({
@@ -70,25 +68,13 @@ frappe.ui.form.on("Sample Inward", {
             doc: frm.doc,
             callback: function (r) {
                 frm.refresh_field("test_on_sample");
-                // frm.reload_doc(); 
             }
         });
     }
-
 });
 // **************************************************************************************************
 frappe.ui.form.on("Material Details", {
-    // material_specification(frm, cdt, cdn) {
-    //     update_items_array(frm);
-    // },
-    // material_details_remove(frm, cdt, cdn) {
-    //     update_items_array(frm);
-    // },
-    // onload(frm) {
-    //     update_items_array(frm);
-    // },
     material_details_remove(frm, cdt, cdn) {
-        // update_items_array(frm);
         call_cutting_row_update(frm);
         frm.refresh_field("test_on_sample");
     },
@@ -112,16 +98,6 @@ frappe.ui.form.on("Material Details", {
         }
     }
 });
-// **************************************************************************************************
-// function update_items_array(frm) {
-//     items = []; // clear first
-//     (frm.doc.material_details || []).forEach(row => {
-//         if (row.material_specification) {
-//             items.push(row.material_specification);
-//         }
-//     });
-//     console.log("Updated items:", items);
-// }
 // **************************************************************************************************
 function call_cutting_row_update(frm) {
     frm.call({
@@ -148,80 +124,26 @@ frappe.ui.form.on("Test On sample", {
         }
     },
     test_group(frm, cdt, cdn) {
-        let child = locals[cdt][cdn];
+        let row = locals[cdt][cdn];
         frappe.model.set_value(cdt, cdn, "test_method", "");
-        if (!child.test_group) {
-            return;
-        }
-        item1 = [];
-        frappe.call({
-            method: "frappe.client.get_list",
-            args: {
-                doctype: "Test Method",
-                filters: { test_group: child.test_group },
-                fields: ["name"]
-            },
-            callback: function (r) {
-                if (r.message && r.message.length > 0) {
-                    r.message.forEach(row => {
-                        item1.push(row.name);
-                    });
-                    frappe.meta.get_docfield("Test On Sample", "test_method", frm.doc.name).options = item1;
-                    frm.refresh_field("test_on_sample");
-                }
-            }
-        });
+        frappe.model.set_value(cdt, cdn, "test_description", "");
+        frappe.model.set_value(cdt, cdn, "price", "");
     },
     test_method(frm, cdt, cdn) {
-        let child = locals[cdt][cdn];
+        let row = locals[cdt][cdn];
         frappe.model.set_value(cdt, cdn, "test_description", "");
-
-        if (child.test_method) {
-            frappe.db.get_value("Test Method", child.test_method, "group", (r) => {
-                if (r && r.group) {
-                    frappe.model.set_value(cdt, cdn, "group", r.group);
-                } else {
-                    frappe.model.set_value(cdt, cdn, "group", 0);
-                }
-            });
-        }
-        else {
-            frappe.model.set_value(cdt, cdn, "price", 0);
-        }
-        description = [];
-
-        frappe.call({
-            method: "frappe.client.get_list",
-            args: {
-                doctype: "Test Description",
-                filters: { test_method: child.test_method },
-                fields: ["name"]
-            },
-            callback: function (r) {
-                if (r.message && r.message.length > 0) {
-                    r.message.forEach(row => {
-                        description.push(row.name);
-                    });
-                    frappe.meta.get_docfield("Test On Sample", "test_description", frm.doc.name).options = description;
-                    frm.refresh_field("test_on_sample");
+        frappe.model.set_value(cdt, cdn, "price", "");
+    },
+    test_description(frm, cdt, cdn) {
+        let row = locals[cdt][cdn];
+        if (!row.test_description) return;
+        frappe.db.get_value("Test Description",row.test_description,"rate",
+            function(r) {
+                if (r && r.rate) {
+                    frappe.model.set_value(cdt, cdn, "price", r.rate);
                 }
             }
-        });
-
-    },
-  test_description: function (frm, cdt, cdn) {
-     let child = locals[cdt][cdn]; is_default == true; 
-     if (child.test_description) {
-         frappe.db.get_value("Test Description", child.test_description, "rate", (r) => { 
-            if (r && r.rate) { 
-                frappe.model.set_value(cdt, cdn, "price", r.rate); 
-            } else { 
-                frappe.model.set_value(cdt, cdn, "price", 0); 
-            } 
-        }); 
-    } else {
-         frappe.model.set_value(cdt, cdn, "price", 0); 
-        } 
+        );
     }
 });
 // **************************************************************************************************
@@ -300,7 +222,3 @@ function calculate_total(cdt, cdn) {
         (row.charge || 0) * (row.quantity || 1)
     );
 }
-
-
-
-

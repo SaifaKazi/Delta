@@ -8,10 +8,12 @@
  "field_order": [
   "test_description",
   "test_method",
+  "test_group",
   "column_break_dypw",
   "rate",
   "is_default",
-  "naming_series"
+  "naming_series",
+  "customer_name"
  ],
  "fields": [
   {
@@ -53,12 +55,24 @@
    "label": "Naming Series",
    "options": "TDES.##",
    "read_only": 1
+  },
+  {
+   "fieldname": "test_group",
+   "fieldtype": "Link",
+   "label": "Test Group",
+   "options": "Test Group"
+  },
+  {
+   "fieldname": "customer_name",
+   "fieldtype": "Link",
+   "label": "Customer Name",
+   "options": "Customer"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-01-23 13:42:04.971706",
+ "modified": "2026-02-16 12:25:23.019327",
  "modified_by": "Administrator",
  "module": "Delta Sanpra",
  "name": "Test Description",
@@ -79,7 +93,7 @@
   }
  ],
  "row_format": "Dynamic",
- "show_title_field_in_link": 1,
+ "search_fields": "rate",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": [],
