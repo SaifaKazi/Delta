@@ -1,0 +1,53 @@
+{
+ "app": "delta_sanpra",
+ "creation": "2026-01-28 17:00:26.629359",
+ "docstatus": 0,
+ "doctype": "Workspace Sidebar",
+ "header_icon": "list",
+ "idx": 0,
+ "items": [
+  {
+   "child": 0,
+   "collapsible": 1,
+   "indent": 0,
+   "keep_closed": 0,
+   "label": "Home",
+   "link_to": "Inward Dept",
+   "link_type": "Workspace",
+   "show_arrow": 0,
+   "type": "Link"
+  },
+  {
+   "child": 0,
+   "collapsible": 1,
+   "filters": "[[\"Sample Inward\",\"workflow_state\",\"=\",\"Under Verification\"]]",
+   "indent": 0,
+   "keep_closed": 0,
+   "label": "Sample Inward (Under Verification)",
+   "link_to": "Sample Inward",
+   "link_type": "DocType",
+   "navigate_to_tab": "",
+   "show_arrow": 0,
+   "type": "Link"
+  },
+  {
+   "child": 0,
+   "collapsible": 1,
+   "filters": "[[\"Sample Inward\",\"workflow_state\",\"=\",\"Verified\"]]",
+   "indent": 0,
+   "keep_closed": 0,
+   "label": "Sample Inward (Verified)",
+   "link_to": "Sample Inward",
+   "link_type": "DocType",
+   "show_arrow": 0,
+   "type": "Link"
+  }
+ ],
+ "modified": "2026-02-06 16:28:13.436355",
+ "modified_by": "Administrator",
+ "module": "Delta Sanpra",
+ "name": "Inward",
+ "owner": "Administrator",
+ "standard": 1,
+ "title": "Inward"
+}

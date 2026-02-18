@@ -8,29 +8,29 @@
  "field_order": [
   "party_details_tab",
   "section_break_lkqk",
-  "naming_series",
-  "amended_from",
   "date",
-  "sample_received_date",
+  "challan_date",
   "column_break_dirz",
   "customer",
   "quantity",
+  "amended_from",
   "column_break_xocz",
   "received_by",
   "sample_received",
   "courier_name",
   "column_break_fpkr",
   "challan_no",
-  "challan_date",
+  "naming_series",
   "section_break_rahy",
   "client",
   "column_break_cecu",
   "inspector",
   "other_information_section",
   "other_information",
-  "material_details_tab",
-  "material_details",
+  "column_break_zica",
+  "attach_image",
   "sample_details_tab",
+  "material_details",
   "section_break_jjrh",
   "get_sample",
   "test_on_sample",
@@ -39,6 +39,10 @@
   "cutting_charge",
   "machining_charge_section",
   "machining_charge",
+  "section_break_rzce",
+  "mrn_no",
+  "column_break_egly",
+  "mail_send",
   "section_break_uczp",
   "sticker_print"
  ],
@@ -154,11 +158,6 @@
    "label": "Other Information"
   },
   {
-   "fieldname": "material_details_tab",
-   "fieldtype": "Tab Break",
-   "label": "Material Details"
-  },
-  {
    "fieldname": "material_details",
    "fieldtype": "Table",
    "label": "Material Details",
@@ -173,7 +172,8 @@
    "fieldname": "test_on_sample",
    "fieldtype": "Table",
    "label": "Test On sample",
-   "options": "Test On sample"
+   "options": "Test On sample",
+   "reqd": 1
   },
   {
    "fieldname": "process_charges_tab",
@@ -216,7 +216,8 @@
   },
   {
    "fieldname": "section_break_uczp",
-   "fieldtype": "Section Break"
+   "fieldtype": "Section Break",
+   "hidden": 1
   },
   {
    "allow_on_submit": 1,
@@ -230,15 +231,37 @@
    "fieldtype": "Section Break"
   },
   {
-   "fieldname": "sample_received_date",
-   "fieldtype": "Date",
-   "label": "Sample Received Date"
-  },
-  {
    "depends_on": "eval:doc.sample_received == \"By Courier\"",
    "fieldname": "courier_name",
    "fieldtype": "Data",
    "label": "Courier Name"
+  },
+  {
+   "fieldname": "column_break_zica",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "attach_image",
+   "fieldtype": "Attach Image",
+   "label": "Attach Image"
+  },
+  {
+   "fieldname": "section_break_rzce",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "mrn_no",
+   "fieldtype": "Data",
+   "label": "MRN No."
+  },
+  {
+   "fieldname": "column_break_egly",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "mail_send",
+   "fieldtype": "Button",
+   "label": "Mail Send"
   }
  ],
  "grid_page_length": 50,
@@ -246,11 +269,27 @@
  "is_submittable": 1,
  "links": [
   {
-   "link_doctype": "Lab Analyst",
+   "link_doctype": "Chemical Test",
+   "link_fieldname": "inward_number"
+  },
+  {
+   "link_doctype": "Physical Test",
+   "link_fieldname": "inward_number"
+  },
+  {
+   "link_doctype": "ASME Section IX Test",
+   "link_fieldname": "inward_number"
+  },
+  {
+   "link_doctype": "Corrosion Test",
+   "link_fieldname": "inward_number"
+  },
+  {
+   "link_doctype": "Metallography Test",
    "link_fieldname": "inward_number"
   }
  ],
- "modified": "2026-01-22 10:13:12.979247",
+ "modified": "2026-02-18 16:26:36.245158",
  "modified_by": "Administrator",
  "module": "Delta Sanpra",
  "name": "Sample Inward",

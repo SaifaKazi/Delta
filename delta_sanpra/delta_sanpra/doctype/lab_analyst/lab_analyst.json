@@ -271,7 +271,7 @@
   "relative_accuracy_for_120_fields",
   "volume_fraction_ferrite",
   "column_break_rvkk",
-  "volume_fraction_ferrite__for_120_fields",
+  "volume_fraction_ferrite_for_120_fields",
   "section_break_yvog",
   "items",
   "section_break_lyrn",
@@ -410,8 +410,7 @@
   },
   {
    "fieldname": "section_break_chce",
-   "fieldtype": "Section Break",
-   "hidden": 1
+   "fieldtype": "Section Break"
   },
   {
    "fieldname": "column_break_kqst",
@@ -873,11 +872,6 @@
   {
    "fieldname": "column_break_jgix",
    "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "volume_fraction_ferrite__for_120_fields",
-   "fieldtype": "Float",
-   "label": "Volume fraction (Ferrite %) for 120 fields"
   },
   {
    "depends_on": "eval: doc.test_method == \"Volume Fraction Analysis ASTM E562 : 19e1\" ||\ndoc.test_method == \"In-Situ Metallography ASTM E1351 : 01(2020) & ASTM E562 : 19e1\"",
@@ -1746,17 +1740,22 @@
    "fieldname": "test_temp",
    "fieldtype": "Float",
    "label": "Test Temp.(\u00b0C)"
+  },
+  {
+   "fieldname": "volume_fraction_ferrite_for_120_fields",
+   "fieldtype": "Float",
+   "label": "Volume fraction (Ferrite %) for 120 fields"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-01-28 14:36:28.157881",
+ "modified": "2026-02-02 10:00:31.122246",
  "modified_by": "Administrator",
  "module": "Delta Sanpra",
  "name": "Lab Analyst",
- "naming_rule": "Expression",
+ "naming_rule": "Expression (old style)",
  "owner": "Administrator",
  "permissions": [
   {

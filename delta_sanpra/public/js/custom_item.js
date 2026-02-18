@@ -3,22 +3,24 @@ description = []
 frappe.ui.form.on("Item", {
     onload(frm) {
         frm.page.sidebar.hide();
-    },
-    refresh(frm) {
-        frm.set_query("test_method", "custom_material_sample_details", function () {
+        frm.set_query("test_method", "custom_material_sample_details", function(doc, cdt, cdn) {
+            let row = locals[cdt][cdn];
             return {
-                filters: [
-                    ["Test Method", "name", "in", test]
-                ]
-            }
-        })
-        frm.set_query("test_description", "custom_material_sample_details", function () {
+                filters: {
+                    test_group: row.test_group
+                }
+            };
+        });
+
+        // test_description filter
+        frm.set_query("test_description", "custom_material_sample_details", function(doc, cdt, cdn) {
+            let row = locals[cdt][cdn];
             return {
-                filters: [
-                    ["Test Description", "name", "in", description]
-                ]
-            }
-        })
+                filters: {
+                    test_method: row.test_method
+                }
+            };
+        });
     },
     custom_standard: set_item_name,
     custom_year: set_item_name,
@@ -44,49 +46,32 @@ function set_item_name(frm) {
 //**********************************************************************************************************
 frappe.ui.form.on("Material Sample Details", {
     test_group(frm, cdt, cdn) {
-        let child = locals[cdt][cdn];
 
-        test = [];
+        frappe.model.set_value(cdt, cdn, "test_method", "");
+        frappe.model.set_value(cdt, cdn, "test_description", "");
 
-        frappe.call({
-            method: "frappe.client.get_list",
-            args: {
-                doctype: "Test Method",
-                filters: { test_group: child.test_group },
-                fields: ["name"]
-            },
-            callback: function (r) {
-                if (r.message && r.message.length > 0) {
-                    r.message.forEach(row => {
-                        test.push(row.name);
-                    });
-
+        frm.set_query("test_method", "custom_material_sample_details", function(doc, cdt, cdn) {
+            let row = locals[cdt][cdn];
+            return {
+                filters: {
+                    test_group: row.test_group
                 }
-            }
+            };
         });
     },
     test_method(frm, cdt, cdn) {
+    let row = locals[cdt][cdn];
+    if (!row) return;
+    frappe.model.set_value(cdt, cdn, "test_description", "");
+    frm.set_query("test_description", "custom_material_sample_details", function(doc, cdt, cdn) {
         let child = locals[cdt][cdn];
-
-        description = [];
-
-        frappe.call({
-            method: "frappe.client.get_list",
-            args: {
-                doctype: "Test Description",
-                filters: { test_method: child.test_method },
-                fields: ["name"]
-            },
-            callback: function (r) {
-                if (r.message && r.message.length > 0) {
-                    r.message.forEach(row => {
-                        description.push(row.name);
-                    });
-
-                }
+        return {
+            filters: {
+                test_method: child.test_method
             }
-        });
-    }
-
+        };
+    });
+    } 
 });
+
 
