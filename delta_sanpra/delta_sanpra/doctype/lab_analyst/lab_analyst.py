@@ -26,72 +26,7 @@ class LabAnalyst(Document):
             min_range = float(row.method_min_range or 0)
             max_range = float(row.method_max_range or 0)
             row.status = "NABL" if min_range < value < max_range else "NON NABL"
-# **********************************************************************************************
-    @frappe.whitelist()
-    def read_pdf_and_fill_table(self):
-        if not self.pdf_file:
-            return
-        try:
-            from PyPDF2 import PdfReader
-        except ImportError:
-            frappe.throw("PyPDF2 library is not installed on server")
-        # Clear child table
-        self.test_details_physical = []
 
-        file_doc = frappe.get_doc("File", {"file_url": self.pdf_file})
-        pdf_path = file_doc.get_full_path()
-
-        reader = PdfReader(pdf_path)
-        text = ""
-
-        for page in reader.pages:
-            page_text = page.extract_text()
-            if page_text:
-                text += page_text + "\n"
-
-        skip_params = [
-            "input data","output data","tested by","stress rate","stress vs. strain","tensile test report","machine model",
-            "machine serial no","customer name","order no.","lot no.","customer address","test type","heat no.","date & time"
-        ]
-        skip_value_keywords = [
-            "output data",
-            "input data",
-            "tensile test report"
-        ]
-        added_params = set()
-        for line in text.split("\n"):
-            if ":" not in line:
-                continue
-            param, val = line.split(":", 1)
-            param = param.strip()
-            val = val.strip() 
-            lower_val = val.lower()
-            for word in skip_value_keywords:
-                if word in lower_val:
-                    val = val[:lower_val.index(word)].strip()
-                    break
-             # blank allowed
-            if not param:
-                continue
-            # skip headings / junk
-            normalized_param = param.lower().replace(".", "").strip()
-            if normalized_param in [p.replace(".", "").strip() for p in skip_params]:
-                continue
-            # avoid duplicate parameters
-            if param.lower() in added_params:
-                continue
-            uom = ""
-            if val:
-                match = re.match(r"^\s*([-+]?\d*\.?\d+)\s*([a-zA-Z/%²³]*)", val)
-                if match:
-                    val = match.group(1)
-                    uom = match.group(2).strip()
-            self.append("test_details_physical", {
-                "parameter": param,
-                "value": val,
-                "uom": uom
-            })
-            added_params.add(normalized_param)
 #*********************************************************************************************************
 
         # save document

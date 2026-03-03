@@ -7,11 +7,12 @@
  "engine": "InnoDB",
  "field_order": [
   "test_description",
-  "test_method",
   "test_group",
+  "test_method",
   "column_break_dypw",
   "rate",
   "is_default",
+  "is_standard",
   "naming_series",
   "customer_name"
  ],
@@ -52,6 +53,7 @@
   {
    "fieldname": "naming_series",
    "fieldtype": "Select",
+   "hidden": 1,
    "label": "Naming Series",
    "options": "TDES.##",
    "read_only": 1
@@ -67,12 +69,18 @@
    "fieldtype": "Link",
    "label": "Customer Name",
    "options": "Customer"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_standard",
+   "fieldtype": "Check",
+   "label": "Is Standard"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-02-16 12:25:23.019327",
+ "modified": "2026-03-03 10:25:19.107910",
  "modified_by": "Administrator",
  "module": "Delta Sanpra",
  "name": "Test Description",

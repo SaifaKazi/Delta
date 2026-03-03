@@ -11,7 +11,7 @@
   "column_break_kduy",
   "thik_dia",
   "column_break_vgqi",
-  "charge",
+  "machining_charge",
   "column_break_mcil",
   "total",
   "quantity",
@@ -89,17 +89,17 @@
    "options": "Item"
   },
   {
-   "fieldname": "charge",
+   "fieldname": "machining_charge",
    "fieldtype": "Float",
    "in_list_view": 1,
-   "label": "Cutting Charges"
+   "label": "Machining Charge"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2026-01-20 15:43:57.760071",
+ "modified": "2026-02-24 17:50:18.675449",
  "modified_by": "Administrator",
  "module": "Delta Sanpra",
  "name": "Machining Charge",

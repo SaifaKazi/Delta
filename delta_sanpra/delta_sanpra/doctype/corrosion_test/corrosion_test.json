@@ -7,24 +7,32 @@
  "engine": "InnoDB",
  "field_order": [
   "section_break_byfq",
-  "date",
-  "inward_number",
-  "witness",
-  "customer_requirement",
-  "column_break_watc",
-  "test_group",
-  "test_method",
-  "material_specification",
-  "column_break_xdqt",
-  "mrn",
-  "material_shape",
-  "heat_number",
+  "document_id",
   "challan_no",
-  "column_break_tncy",
-  "ulr_no",
-  "is_print",
-  "customer_name",
+  "witness",
+  "column_break_watc",
+  "mrn_no",
+  "material_specification",
   "challan_date",
+  "column_break_xdqt",
+  "ulr_no",
+  "heat_number",
+  "is_print",
+  "column_break_tncy",
+  "customer_name",
+  "test_method",
+  "customer_requirement",
+  "section_break_gjwq",
+  "test_group",
+  "inward_number",
+  "column_break_yhei",
+  "child_table_id",
+  "discipline",
+  "column_break_ptld",
+  "amended_from",
+  "group",
+  "column_break_ykgo",
+  "material_shape",
   "section_break_inoo",
   "test_solution",
   "column_break_oiud",
@@ -43,6 +51,7 @@
   "column_break_lqzr",
   "etchant_conditions",
   "section_break_bfnv",
+  "report_date",
   "capacity_of_test_container",
   "test_temperature",
   "how_was_temperature_maintained",
@@ -56,6 +65,7 @@
   "hot_plate_no",
   "corrosion_rate_mmd",
   "column_break_oupy",
+  "tested_date",
   "total_surface_area_of_sample",
   "weld_condition",
   "surface_treatment",
@@ -146,12 +156,6 @@
   "column_break_smxj",
   "image_2",
   "image_2_description",
-  "section_break_gjwq",
-  "document_id",
-  "column_break_yhei",
-  "child_table_id",
-  "column_break_ptld",
-  "amended_from",
   "section_break_hond",
   "remark",
   "column_break_iqby",
@@ -200,16 +204,9 @@
   {
    "fieldname": "test_group",
    "fieldtype": "Link",
+   "in_standard_filter": 1,
    "label": "Test Group",
    "options": "Test Group"
-  },
-  {
-   "default": "Today",
-   "fieldname": "date",
-   "fieldtype": "Date",
-   "in_list_view": 1,
-   "label": "Date",
-   "reqd": 1
   },
   {
    "fieldname": "inward_number",
@@ -230,6 +227,7 @@
   {
    "fieldname": "material_specification",
    "fieldtype": "Link",
+   "in_standard_filter": 1,
    "label": "Material Specification",
    "options": "Item"
   },
@@ -239,8 +237,10 @@
    "hidden": 1
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "test_method",
    "fieldtype": "Link",
+   "in_standard_filter": 1,
    "label": "Test Method",
    "options": "Test Method"
   },
@@ -249,17 +249,13 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "mrn",
-   "fieldtype": "Data",
-   "label": "MRN"
-  },
-  {
    "fieldname": "material_shape",
    "fieldtype": "Link",
    "label": "Material Shape",
    "options": "Material Shape"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "heat_number",
    "fieldtype": "Data",
    "label": "Heat Number"
@@ -287,6 +283,7 @@
   {
    "fieldname": "customer_name",
    "fieldtype": "Data",
+   "in_standard_filter": 1,
    "label": "Customer Name"
   },
   {
@@ -337,6 +334,7 @@
    "fieldtype": "Column Break"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "sample_description",
    "fieldtype": "Small Text",
    "label": "Sample Description"
@@ -348,6 +346,7 @@
   {
    "fieldname": "material_description",
    "fieldtype": "Small Text",
+   "hidden": 1,
    "label": "Material Description"
   },
   {
@@ -1134,13 +1133,49 @@
   {
    "fieldname": "column_break_xnyo",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "discipline",
+   "fieldtype": "Select",
+   "label": "Discipline",
+   "options": "\nChemical\nMechanical"
+  },
+  {
+   "fieldname": "group",
+   "fieldtype": "Select",
+   "label": "Group",
+   "options": "\nMechanical Properties of Metals\nMetallography\nCorrosion Tests\nMetals and Alloys"
+  },
+  {
+   "default": "Today",
+   "fieldname": "report_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Report Date",
+   "reqd": 1
+  },
+  {
+   "default": "Today",
+   "fieldname": "tested_date",
+   "fieldtype": "Date",
+   "label": "Tested Date"
+  },
+  {
+   "fieldname": "column_break_ykgo",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "mrn_no",
+   "fieldtype": "Data",
+   "in_standard_filter": 1,
+   "label": "MRN No"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-02-14 14:55:23.995356",
+ "modified": "2026-02-28 14:00:23.974101",
  "modified_by": "Administrator",
  "module": "Delta Sanpra",
  "name": "Corrosion Test",

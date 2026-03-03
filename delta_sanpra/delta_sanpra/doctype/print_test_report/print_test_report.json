@@ -1,0 +1,130 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2026-03-02 15:00:59.552241",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "sample_inward",
+  "material_specification",
+  "column_break_wlnx",
+  "mrn_no",
+  "authorized_by",
+  "column_break_ujvs",
+  "customer_name",
+  "test_group",
+  "column_break_ibbs",
+  "test_id",
+  "test_method",
+  "status",
+  "section_break_ecwk",
+  "get_data",
+  "items"
+ ],
+ "fields": [
+  {
+   "fieldname": "sample_inward",
+   "fieldtype": "Link",
+   "label": "Sample Inward",
+   "options": "Sample Inward"
+  },
+  {
+   "fieldname": "material_specification",
+   "fieldtype": "Link",
+   "label": "Material Specification",
+   "options": "Item"
+  },
+  {
+   "fieldname": "column_break_wlnx",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "sample_inward.mrn_no",
+   "fieldname": "mrn_no",
+   "fieldtype": "Data",
+   "label": "MRN NO."
+  },
+  {
+   "fieldname": "authorized_by",
+   "fieldtype": "Link",
+   "label": "Authorized By",
+   "options": "Employee"
+  },
+  {
+   "fieldname": "column_break_ujvs",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "customer_name",
+   "fieldtype": "Link",
+   "label": "Customer Name",
+   "options": "Customer"
+  },
+  {
+   "fieldname": "test_group",
+   "fieldtype": "Link",
+   "label": "Test Group",
+   "options": "Test Group"
+  },
+  {
+   "fieldname": "column_break_ibbs",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "test_id",
+   "fieldtype": "Data",
+   "label": "Test Id"
+  },
+  {
+   "fieldname": "test_method",
+   "fieldtype": "Link",
+   "label": "Test Method",
+   "options": "Test Method"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Data",
+   "label": "Status"
+  },
+  {
+   "fieldname": "section_break_ecwk",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "get_data",
+   "fieldtype": "Button",
+   "label": "Get Data"
+  },
+  {
+   "fieldname": "items",
+   "fieldtype": "Table",
+   "label": "Items",
+   "options": "Print Test Report Item"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-03-02 15:00:59.552241",
+ "modified_by": "Administrator",
+ "module": "Delta Sanpra",
+ "name": "Print Test Report",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}

@@ -4,10 +4,10 @@
 let item1 = []
 let description = []
 function validate_challan_date(frm) {
-    if (frm.doc.challan_date && frm.doc.date &&
-        frm.doc.challan_date > frm.doc.date) {
+    if (frm.doc.challan_date && frm.doc.sample_received_date &&
+        frm.doc.challan_date > frm.doc.sample_received_date) {
 
-        frappe.msgprint("Challan Date cannot be greater than date");
+        frappe.msgprint("Challan Date cannot be greater than Sample Received Date");
     }
 }
 // **************************************************************************************************
@@ -56,7 +56,14 @@ frappe.ui.form.on("Sample Inward", {
                 }
             };
         });
-
+        frm.set_query("customer_requirement", "test_on_sample", function(doc, cdt, cdn) {
+            let row = locals[cdt][cdn];
+            return {
+                filters: {
+                    test_method: row.test_method
+                }
+            };
+        });
     },
     onload(frm) {
         frm.page.sidebar.hide();
@@ -68,8 +75,33 @@ frappe.ui.form.on("Sample Inward", {
             doc: frm.doc,
             callback: function (r) {
                 frm.refresh_field("test_on_sample");
+
+                // frm.set_df_property("get_sample", "hidden", 1);
             }
         });
+    },
+    print_sticker: function(frm) {
+
+        let selected_rows = (frm.doc.sticker_print || [])
+            .filter(r => r.print_this)
+            .map(r => r.name);
+
+        if (!selected_rows.length) {
+            frappe.msgprint("Please select at least one row to print.");
+            return;
+        }
+
+        let encoded_name = encodeURIComponent(frm.doc.name);
+        let row_string = selected_rows.join(",");
+
+        window.open(
+            `/printview?doctype=${frm.doctype}` +
+            `&name=${encoded_name}` +
+            `&format=Sticker Print` +
+            `&no_letterhead=1` +
+            `&_selected_rows=${row_string}`,
+            "_blank"
+        );
     }
 });
 // **************************************************************************************************
@@ -128,10 +160,12 @@ frappe.ui.form.on("Test On sample", {
         frappe.model.set_value(cdt, cdn, "test_method", "");
         frappe.model.set_value(cdt, cdn, "test_description", "");
         frappe.model.set_value(cdt, cdn, "price", "");
+        
     },
     test_method(frm, cdt, cdn) {
         let row = locals[cdt][cdn];
         frappe.model.set_value(cdt, cdn, "test_description", "");
+        frappe.model.set_value(cdt, cdn, "customer_requirement", "");
         frappe.model.set_value(cdt, cdn, "price", "");
     },
     test_description(frm, cdt, cdn) {
@@ -180,12 +214,12 @@ frappe.ui.form.on("Machining Charge", {
                     }
                 });
 
-                frappe.model.set_value(cdt, cdn, "charge", charge);
+                frappe.model.set_value(cdt, cdn, "machining_charge", charge);
                 calculate_total(cdt, cdn);
             }
         });
     },
-    charge(frm, cdt, cdn) {
+    machining_charge(frm, cdt, cdn) {
         calculate_total(cdt, cdn);
     },
 
@@ -205,7 +239,7 @@ frappe.ui.form.on("Machining Charge", {
                 cur.description = r.description;
                 cur.processing_charges = r.processing_charges;
                 cur.thik_dia = r.thik_dia;
-                cur.charge = r.charge;
+                cur.machining_charge = r.machining_charge;
                 calculate_total(cdt, cdn);
                 frm.refresh_field("machining_charge");
             }
@@ -219,6 +253,6 @@ function calculate_total(cdt, cdn) {
         cdt,
         cdn,
         "total",
-        (row.charge || 0) * (row.quantity || 1)
+        (row.machining_charge || 0) * (row.quantity || 0)
     );
 }
