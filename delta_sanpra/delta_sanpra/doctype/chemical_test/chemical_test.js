@@ -24,15 +24,18 @@ frappe.ui.form.on("Chemical Test", {
                 });
             });
         }
-        frm.set_query("parameter", "test_details", function () {
+        frm.set_query("parameter", "test_details_chemical", function (doc, cdt, cdn) {
+        let row = locals[cdt][cdn];
+        if (row.test_method) {
             return {
                 filters: [
                     ["Chemical Parameter", "name", "in", items]
                 ]
             }
-        })
+        }
+        return {};
+    });
 	},
-    
     upload_excel_file(frm) {
         if (frm.doc.upload_excel_file) {
             frm.call({
@@ -55,6 +58,20 @@ frappe.ui.form.on("Chemical Test", {
     test_group(frm){
         frm.set_value('test_method',null),
         set_test_method_filter(frm);
+    },
+    excel_attach(frm) {
+        if (frm.doc.excel_attach) {
+            frm.call({
+                method: "read_pmi_excel",
+                doc: frm.doc,
+            }).then(() => {
+                frm.refresh_field("pmi_test_table");
+                frappe.msgprint("PMI Data Imported Successfully");
+            });
+        } else {
+            frm.clear_table("pmi_test_table");
+            frm.refresh_field("pmi_test_table");
+        }
     }
 });
 function set_test_method_filter(frm) {
@@ -82,7 +99,7 @@ frappe.ui.form.on("Test Details", {
     test_method(frm, cdt, cdn) {
         let child = locals[cdt][cdn];
         frappe.model.set_value(cdt, cdn, "parameter", "");
-        items = []
+        let items = [];
         frappe.call({
             method: "get_test_method",
             doc: frm.doc,
@@ -115,8 +132,9 @@ frappe.ui.form.on("Test Details", {
                     frappe.model.set_value(cdt, cdn, "max_range", data.max_range || "");
                     if (child.value) {
                         let val = parseFloat(child.value);
-                        let min = parseFloat(data.method_min_range);
-                        let max = parseFloat(data.method_max_range);
+                        let min = parseFloat(data.min_range || data.method_min_range);
+                        let max = parseFloat(data.max_range || data.method_max_range);
+
 
                         let status = (val < min || val > max) ? "NON NABL" : "NABL";
                         frappe.model.set_value(cdt, cdn, "status", status);

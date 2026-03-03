@@ -25,16 +25,17 @@
   "status",
   "section_break_xmqh",
   "column_break_wxra",
-  "customer_specification",
+  "customer_requirement",
   "column_break_lmtc",
   "sample_description",
   "column_break_jpmv",
   "material_description",
   "section_break_rupp",
-  "customer_requirment",
   "test_id",
-  "naming_series",
-  "sample_id"
+  "column_break_eyrk",
+  "sample_id",
+  "column_break_fafo",
+  "naming_series"
  ],
  "fields": [
   {
@@ -51,6 +52,7 @@
    "fieldtype": "Column Break"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "test_method",
    "fieldtype": "Link",
    "in_list_view": 1,
@@ -59,17 +61,12 @@
    "reqd": 1
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "test_description",
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Test Description",
    "options": "Test Description"
-  },
-  {
-   "fieldname": "customer_requirment",
-   "fieldtype": "Attach",
-   "in_list_view": 1,
-   "label": "Customer Requirment"
   },
   {
    "fieldname": "material_specification",
@@ -88,6 +85,7 @@
    "fieldtype": "Column Break"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "heat_number",
    "fieldtype": "Data",
    "label": "Heat Number",
@@ -102,15 +100,16 @@
   {
    "fieldname": "sample_description",
    "fieldtype": "Small Text",
+   "in_list_view": 1,
    "label": "Sample Description"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "price",
    "fieldtype": "Float",
    "in_list_view": 1,
    "label": "Price",
-   "precision": "2",
-   "reqd": 1
+   "precision": "2"
   },
   {
    "fieldname": "section_break_xmqh",
@@ -156,9 +155,11 @@
    "read_only": 1
   },
   {
+   "allow_on_submit": 1,
    "fetch_from": "test_method.discipline",
    "fieldname": "discipline",
    "fieldtype": "Select",
+   "in_list_view": 1,
    "label": "Discipline",
    "options": "\nChemical\nMechanical"
   },
@@ -187,25 +188,35 @@
   {
    "fieldname": "material_description",
    "fieldtype": "Small Text",
+   "hidden": 1,
    "label": "Material Description"
-  },
-  {
-   "fieldname": "customer_specification",
-   "fieldtype": "Link",
-   "label": "Customer Requirement",
-   "options": "Customer Requirement"
   },
   {
    "fieldname": "sample_id_heat_no",
    "fieldtype": "Data",
    "label": "Sample Id (Heat No)"
+  },
+  {
+   "fieldname": "customer_requirement",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Customer Requirement",
+   "options": "Customer Requirement"
+  },
+  {
+   "fieldname": "column_break_eyrk",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_fafo",
+   "fieldtype": "Column Break"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2026-02-18 16:01:33.556746",
+ "modified": "2026-03-03 16:04:58.382990",
  "modified_by": "Administrator",
  "module": "Delta Sanpra",
  "name": "Test On sample",

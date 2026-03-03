@@ -15,7 +15,7 @@
   "column_break_vgqi",
   "total",
   "column_break_nxlp",
-  "processing_charges"
+  "cutting_charge"
  ],
  "fields": [
   {
@@ -68,10 +68,10 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "processing_charges",
+   "fieldname": "cutting_charge",
    "fieldtype": "Select",
    "in_list_view": 1,
-   "label": "Processing Charges",
+   "label": "Cutting Charge",
    "options": "\nTensile Machining Charges\nImpact Machining Charges\nCutting Charges\nV-notch preparation charges\nWedled/Seamless pipe Cutting Thk upto 20mm\nIGC Practice E Machining\nBend Sample Preparation up to 25mm thk/Dia\nBend Sample Preparation 26 \u2013 40mm thk/Dia\nBend Sample Preparation 41 \u2013 100mm thk/Dia\nBend Sample Preparation above 101mm thk/Dia\nBend Sample Preparation of Welded samples for root/face/side bend\nWeld plate grinding\nMachining for Jominey with Grinding\nMilling Tensile 01-10mm\nMilling Tensile 11-20mm\nTensile Threading\nDrilling Charges\nHeat Treatment Charges\nMandrill Charges"
   }
  ],
@@ -79,7 +79,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2026-01-20 12:20:57.518336",
+ "modified": "2026-02-24 13:53:07.821323",
  "modified_by": "Administrator",
  "module": "Delta Sanpra",
  "name": "Cutting Charge",

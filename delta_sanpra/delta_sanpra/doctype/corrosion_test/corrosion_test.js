@@ -4,6 +4,25 @@
 frappe.ui.form.on("Corrosion Test", {
 	refresh(frm) {
         set_test_method_filter(frm);
+        if (!frm.is_new()) {
+            frm.add_custom_button("Generate ULR", function () {
+                frm.call({
+                    method: "set_ulr_counter",
+                    doc: frm.doc,
+                    callback: function (r) {
+                        if (r.message) {
+                            let count = r.message.toString().padStart(9, '0');
+                            let prefix = "TC1384426";
+                            let suffix = "F";
+                            let newCode = prefix + count + suffix;
+                            frm.set_value("ulr_no", newCode).then(() => {
+                                frappe.msgprint("ULR No Generated Successfully");
+                            });
+                        }
+                    }
+                });
+            });
+        }
         frm.set_query("parameter", "test_details", function () {
             return {
                 filters: [

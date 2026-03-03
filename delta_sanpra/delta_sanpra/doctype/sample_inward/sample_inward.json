@@ -8,19 +8,19 @@
  "field_order": [
   "party_details_tab",
   "section_break_lkqk",
-  "date",
-  "challan_date",
+  "sample_received_date",
+  "amended_from",
   "column_break_dirz",
   "customer",
   "quantity",
-  "amended_from",
+  "naming_series",
   "column_break_xocz",
   "received_by",
   "sample_received",
   "courier_name",
   "column_break_fpkr",
   "challan_no",
-  "naming_series",
+  "challan_date",
   "section_break_rahy",
   "client",
   "column_break_cecu",
@@ -36,10 +36,13 @@
   "test_on_sample",
   "process_charges_tab",
   "cutting_charge_section",
-  "cutting_charge",
+  "cutting_charge_table",
   "machining_charge_section",
-  "machining_charge",
+  "machining_charge_table",
   "section_break_rzce",
+  "column_break_gkjb",
+  "print_sticker",
+  "column_break_wazv",
   "mrn_no",
   "column_break_egly",
   "mail_send",
@@ -68,20 +71,13 @@
    "search_index": 1
   },
   {
-   "default": "Today",
-   "fieldname": "date",
-   "fieldtype": "Date",
-   "in_list_view": 1,
-   "label": "Date",
-   "reqd": 1
-  },
-  {
    "fieldname": "customer",
    "fieldtype": "Link",
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Customer",
-   "options": "Customer"
+   "options": "Customer",
+   "reqd": 1
   },
   {
    "fieldname": "column_break_dirz",
@@ -119,7 +115,8 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "in_standard_filter": 1,
-   "label": "Challan No"
+   "label": "Challan No",
+   "reqd": 1
   },
   {
    "fieldname": "challan_date",
@@ -172,8 +169,7 @@
    "fieldname": "test_on_sample",
    "fieldtype": "Table",
    "label": "Test On sample",
-   "options": "Test On sample",
-   "reqd": 1
+   "options": "Test On sample"
   },
   {
    "fieldname": "process_charges_tab",
@@ -186,21 +182,9 @@
    "label": "Cutting Charge"
   },
   {
-   "fieldname": "cutting_charge",
-   "fieldtype": "Table",
-   "label": "Cutting Charge",
-   "options": "Cutting Charge"
-  },
-  {
    "fieldname": "machining_charge_section",
    "fieldtype": "Section Break",
    "label": "Machining Charge"
-  },
-  {
-   "fieldname": "machining_charge",
-   "fieldtype": "Table",
-   "label": "Machining Charge",
-   "options": "Machining Charge"
   },
   {
    "fieldname": "naming_series",
@@ -216,8 +200,7 @@
   },
   {
    "fieldname": "section_break_uczp",
-   "fieldtype": "Section Break",
-   "hidden": 1
+   "fieldtype": "Section Break"
   },
   {
    "allow_on_submit": 1,
@@ -252,6 +235,9 @@
   {
    "fieldname": "mrn_no",
    "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
    "label": "MRN No."
   },
   {
@@ -262,6 +248,38 @@
    "fieldname": "mail_send",
    "fieldtype": "Button",
    "label": "Mail Send"
+  },
+  {
+   "fieldname": "sample_received_date",
+   "fieldtype": "Date",
+   "label": "Sample Received Date"
+  },
+  {
+   "fieldname": "cutting_charge_table",
+   "fieldtype": "Table",
+   "label": "Cutting Charge",
+   "options": "Cutting Charge"
+  },
+  {
+   "fieldname": "machining_charge_table",
+   "fieldtype": "Table",
+   "label": "Machining Charge",
+   "options": "Machining Charge"
+  },
+  {
+   "allow_on_submit": 1,
+   "depends_on": "eval:doc.workflow_state == \"Approved\"\n",
+   "fieldname": "print_sticker",
+   "fieldtype": "Button",
+   "label": "Print Sticker"
+  },
+  {
+   "fieldname": "column_break_gkjb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_wazv",
+   "fieldtype": "Column Break"
   }
  ],
  "grid_page_length": 50,
@@ -277,10 +295,6 @@
    "link_fieldname": "inward_number"
   },
   {
-   "link_doctype": "ASME Section IX Test",
-   "link_fieldname": "inward_number"
-  },
-  {
    "link_doctype": "Corrosion Test",
    "link_fieldname": "inward_number"
   },
@@ -289,7 +303,7 @@
    "link_fieldname": "inward_number"
   }
  ],
- "modified": "2026-02-18 16:26:36.245158",
+ "modified": "2026-03-02 18:49:13.166385",
  "modified_by": "Administrator",
  "module": "Delta Sanpra",
  "name": "Sample Inward",
@@ -308,9 +322,22 @@
    "share": 1,
    "submit": 1,
    "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Sample Approver",
+   "share": 1,
+   "write": 1
   }
  ],
  "row_format": "Dynamic",
+ "search_fields": "mrn_no",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": []

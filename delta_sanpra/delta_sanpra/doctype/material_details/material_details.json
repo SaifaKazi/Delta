@@ -32,16 +32,19 @@
    "fieldtype": "Column Break"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "heat_number",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Heat Number"
+   "label": "Heat Number",
+   "reqd": 1
   },
   {
    "fieldname": "column_break_jqof",
    "fieldtype": "Column Break"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "material_shape",
    "fieldtype": "Link",
    "in_list_view": 1,
@@ -77,6 +80,7 @@
    "fieldtype": "Section Break"
   },
   {
+   "allow_on_submit": 1,
    "fetch_from": "material_shape.description",
    "fieldname": "sample_description",
    "fieldtype": "Small Text",
@@ -94,7 +98,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2026-01-22 10:14:50.129948",
+ "modified": "2026-02-24 13:43:12.120385",
  "modified_by": "Administrator",
  "module": "Delta Sanpra",
  "name": "Material Details",

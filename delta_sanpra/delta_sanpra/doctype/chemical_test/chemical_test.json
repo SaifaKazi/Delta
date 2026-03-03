@@ -7,26 +7,38 @@
  "engine": "InnoDB",
  "field_order": [
   "section_break_efjj",
-  "date",
-  "inward_number",
+  "document_id",
+  "heat_number",
+  "customer_requirement",
   "witness",
   "column_break_ynrg",
-  "test_group",
-  "test_method",
-  "material_specification",
-  "column_break_opdj",
-  "mrn",
-  "material_shape",
-  "heat_number",
-  "challan_no",
-  "column_break_zhde",
+  "mrn_no",
   "ulr_no",
+  "material_specification",
+  "test_method",
+  "column_break_opdj",
+  "sample_description",
+  "test_description",
   "is_print",
-  "customer_name",
+  "section_break_ffts",
+  "challan_no",
+  "test_group",
+  "child_table_id",
+  "column_break_jkng",
   "challan_date",
+  "inward_number",
+  "material_shape",
+  "group",
+  "column_break_ojvo",
+  "customer_name",
+  "amended_from",
+  "discipline",
+  "status",
   "section_break_rpzr",
+  "report_date",
   "sample_location",
   "column_break_dvtu",
+  "tested_date",
   "portable_spectro_test_form",
   "column_break_wweu",
   "room_tempc",
@@ -40,43 +52,27 @@
   "column_break_bcid",
   "calibration_date",
   "calibration_due_date",
-  "section_break_ffts",
-  "child_table_id",
-  "column_break_jkng",
-  "document_id",
-  "column_break_ojvo",
-  "amended_from",
   "description_section",
-  "customer_specification",
-  "column_break_puxo",
-  "material_description",
   "column_break_yyqi",
-  "test_description",
+  "customer_specification",
   "column_break_kiqv",
-  "sample_description",
+  "material_description",
   "section_break_gqor",
   "upload_excel_file",
   "column_break_tunf",
   "upload_pdf_file",
   "section_break_jsiu",
   "test_details_chemical",
+  "section_break_cbbe",
+  "excel_attach",
   "pmi_test_table",
   "section_break_ikot",
   "remark",
-  "column_break_qtps",
-  "customer_requirement",
-  "witness_name",
-  "status",
-  "observation",
-  "section_break_xiyb",
-  "return",
-  "amendment_remark",
-  "column_break_viwv",
-  "approved",
-  "column_break_abzp",
   "tested_by",
-  "column_break_vzgk",
-  "authorized_by"
+  "column_break_qtps",
+  "witness_name",
+  "observation",
+  "amendment_remark"
  ],
  "fields": [
   {
@@ -98,14 +94,9 @@
   {
    "fieldname": "test_group",
    "fieldtype": "Link",
+   "in_standard_filter": 1,
    "label": "Test Group",
    "options": "Test Group"
-  },
-  {
-   "default": "Today",
-   "fieldname": "date",
-   "fieldtype": "Date",
-   "label": "Date"
   },
   {
    "fieldname": "inward_number",
@@ -114,6 +105,7 @@
    "options": "Sample Inward"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "heat_number",
    "fieldtype": "Int",
    "label": "Heat Number"
@@ -123,20 +115,19 @@
    "fieldtype": "Column Break"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "test_method",
    "fieldtype": "Link",
+   "in_standard_filter": 1,
    "label": "Test Method",
    "options": "Test Method"
   },
   {
    "fieldname": "material_specification",
    "fieldtype": "Link",
+   "in_standard_filter": 1,
    "label": "Material Specification",
    "options": "Item"
-  },
-  {
-   "fieldname": "column_break_zhde",
-   "fieldtype": "Column Break"
   },
   {
    "fieldname": "material_shape",
@@ -152,6 +143,7 @@
   {
    "fieldname": "customer_name",
    "fieldtype": "Link",
+   "in_standard_filter": 1,
    "label": "Customer Name",
    "options": "Customer"
   },
@@ -167,7 +159,7 @@
   {
    "fieldname": "document_id",
    "fieldtype": "Data",
-   "label": " Document Id"
+   "label": "Sample Id"
   },
   {
    "fieldname": "column_break_ojvo",
@@ -187,15 +179,13 @@
   {
    "fieldname": "customer_specification",
    "fieldtype": "Small Text",
+   "hidden": 1,
    "label": " Customer Specification"
-  },
-  {
-   "fieldname": "column_break_puxo",
-   "fieldtype": "Column Break"
   },
   {
    "fieldname": "material_description",
    "fieldtype": "Small Text",
+   "hidden": 1,
    "label": " Material Description"
   },
   {
@@ -204,7 +194,7 @@
   },
   {
    "fieldname": "test_description",
-   "fieldtype": "Small Text",
+   "fieldtype": "Data",
    "label": " Test Description"
   },
   {
@@ -212,6 +202,7 @@
    "fieldtype": "Column Break"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "sample_description",
    "fieldtype": "Small Text",
    "label": " Sample Description"
@@ -248,6 +239,7 @@
   {
    "fieldname": "observation",
    "fieldtype": "Data",
+   "hidden": 1,
    "label": "Observation"
   },
   {
@@ -346,7 +338,6 @@
    "fieldtype": "Column Break"
   },
   {
-   "depends_on": "eval:doc.test_method == \"Chemical Test ASTM E1476 : 04(2022)\"",
    "fieldname": "pmi_test_table",
    "fieldtype": "Table",
    "label": "PMI Test Table",
@@ -379,11 +370,6 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "mrn",
-   "fieldtype": "Data",
-   "label": "MRN"
-  },
-  {
    "fieldname": "ulr_no",
    "fieldtype": "Data",
    "label": "ULR No."
@@ -404,32 +390,9 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "section_break_xiyb",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "return",
-   "fieldtype": "Attach",
-   "label": "Return"
-  },
-  {
    "fieldname": "amendment_remark",
    "fieldtype": "Data",
    "label": "Amendment Remark"
-  },
-  {
-   "fieldname": "column_break_viwv",
-   "fieldtype": "Column Break"
-  },
-  {
-   "default": "0",
-   "fieldname": "approved",
-   "fieldtype": "Check",
-   "label": "Approved"
-  },
-  {
-   "fieldname": "column_break_abzp",
-   "fieldtype": "Column Break"
   },
   {
    "fieldname": "tested_by",
@@ -439,22 +402,51 @@
    "options": "Employee"
   },
   {
-   "fieldname": "column_break_vzgk",
-   "fieldtype": "Column Break"
+   "fieldname": "discipline",
+   "fieldtype": "Select",
+   "label": "Discipline",
+   "options": "\nChemical\nMechanical"
   },
   {
-   "fieldname": "authorized_by",
-   "fieldtype": "Link",
-   "label": "Authorized By",
-   "link_filters": "[[\"Employee\",\"custom_authorized_by\",\"=\",\"Authorized By\"]]",
-   "options": "Employee"
+   "fieldname": "group",
+   "fieldtype": "Select",
+   "label": "Group",
+   "options": "\nMechanical Properties of Metals\nMetallography\nCorrosion Tests\nMetals and Alloys"
+  },
+  {
+   "default": "Today",
+   "fieldname": "report_date",
+   "fieldtype": "Date",
+   "label": "Report Date"
+  },
+  {
+   "default": "Today",
+   "fieldname": "tested_date",
+   "fieldtype": "Date",
+   "label": "Tested Date"
+  },
+  {
+   "depends_on": "eval:doc.portable_spectro_test_form == \"1\" ||\ndoc.test_method == \"Chemical Test ASTM E1476 : 04(2022)\"",
+   "fieldname": "section_break_cbbe",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "excel_attach",
+   "fieldtype": "Attach",
+   "label": "Excel Attach"
+  },
+  {
+   "fieldname": "mrn_no",
+   "fieldtype": "Data",
+   "in_standard_filter": 1,
+   "label": "MRN No"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-02-14 18:44:39.996798",
+ "modified": "2026-02-28 17:57:59.780944",
  "modified_by": "Administrator",
  "module": "Delta Sanpra",
  "name": "Chemical Test",
