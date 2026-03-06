@@ -235,8 +235,8 @@
   {
    "fieldname": "mrn_no",
    "fieldtype": "Data",
+   "hidden": 1,
    "in_list_view": 1,
-   "in_preview": 1,
    "in_standard_filter": 1,
    "label": "MRN No."
   },
@@ -303,7 +303,7 @@
    "link_fieldname": "inward_number"
   }
  ],
- "modified": "2026-03-02 18:49:13.166385",
+ "modified": "2026-03-04 14:44:41.761674",
  "modified_by": "Administrator",
  "module": "Delta Sanpra",
  "name": "Sample Inward",

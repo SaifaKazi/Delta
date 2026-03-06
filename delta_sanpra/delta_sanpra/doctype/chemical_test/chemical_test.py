@@ -43,26 +43,27 @@ class ChemicalTest(Document):
 		# frappe.msgprint(str(parameters))
 		return parameters
 	#*************************************************************************************
-	@frappe.whitelist()
-	def get_minmax_range(self, test_method=None, parameter=None, material_specification=None):
-		data = {}
-		# Only if test_method provided
-		if test_method:
-			test_method_doc = frappe.get_doc("Test Method", test_method)
-			for row in test_method_doc.chemical_details:
-				if row.parameter == parameter:
-					data["method_min_range"] = row.min_range
-					data["method_max_range"] = row.max_range
-					break
-		# Material Specification always check
-		if material_specification:
-			material_spec_doc = frappe.get_doc("Item", material_specification)
-			for row in material_spec_doc.custom_chemical_detail:
-				if row.parameter == parameter:
-					data["min_range"] = row.min_range
-					data["max_range"] = row.max_range
-					break
-		return [data]
+	# @frappe.whitelist()
+	# def get_minmax_range(self, test_method=None, parameter=None, material_specification=None):
+	# 	data = {}
+	# 	# Only if test_method provided
+	# 	if test_method:
+	# 		test_method_doc = frappe.get_doc("Test Method", test_method)
+	# 		for row in test_method_doc.chemical_details:
+	# 			if row.parameter == parameter:
+	# 				data["method_min_range"] = row.min_range
+	# 				data["method_max_range"] = row.max_range
+	# 				break
+	# 	# Material Specification always check
+	# 	if material_specification:
+	# 		material_spec_doc = frappe.get_doc("Item", material_specification)
+	# 		for row in material_spec_doc.custom_chemical_detail:
+	# 			if row.parameter == parameter:
+	# 				data["min_range"] = row.min_range
+	# 				data["max_range"] = row.max_range
+	# 				break
+	# 	return [data]
+
 
 #**************************************************************************
 	# @frappe.whitelist()

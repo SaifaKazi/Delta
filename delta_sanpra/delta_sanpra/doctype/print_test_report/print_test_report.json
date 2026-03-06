@@ -8,14 +8,13 @@
   "sample_inward",
   "material_specification",
   "column_break_wlnx",
-  "mrn_no",
   "authorized_by",
+  "test_group",
   "column_break_ujvs",
   "customer_name",
-  "test_group",
+  "test_method",
   "column_break_ibbs",
   "test_id",
-  "test_method",
   "status",
   "section_break_ecwk",
   "get_data",
@@ -25,7 +24,7 @@
   {
    "fieldname": "sample_inward",
    "fieldtype": "Link",
-   "label": "Sample Inward",
+   "label": "MRN NO.",
    "options": "Sample Inward"
   },
   {
@@ -37,12 +36,6 @@
   {
    "fieldname": "column_break_wlnx",
    "fieldtype": "Column Break"
-  },
-  {
-   "fetch_from": "sample_inward.mrn_no",
-   "fieldname": "mrn_no",
-   "fieldtype": "Data",
-   "label": "MRN NO."
   },
   {
    "fieldname": "authorized_by",
@@ -105,7 +98,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-03-02 15:00:59.552241",
+ "modified": "2026-03-03 16:32:13.600614",
  "modified_by": "Administrator",
  "module": "Delta Sanpra",
  "name": "Print Test Report",

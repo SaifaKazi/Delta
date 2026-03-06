@@ -20,7 +20,7 @@ class PhysicalTest(Document):
 	@frappe.whitelist()
 	def read_pdf(self):
 		# Always clear table first
-		self.set("test_details_physical", [])
+		# self.set("test_details_physical", [])
 		if not self.pdf_file:
 			return
 		if not self.specimen_shape:
@@ -106,8 +106,19 @@ class PhysicalTest(Document):
 		else:
 			frappe.throw("Unsupported Specimen Shape")
 		required_params_lower = [p.lower().strip() for p in required_params]
-		added_params = set()
 		# Extract Only Required Parameters (Case Insensitive)
+		# Only keep rows not from PDF (manual or Excel edits stay)
+		new_table = []
+		added_params = set()
+
+		for row in self.test_details_physical:
+			if getattr(row, "from_pdf", 0):
+				continue  # skip old PDF rows
+			new_table.append(row)
+			added_params.add(row.parameter.lower().strip())
+
+		self.test_details_physical = new_table
+
 		for line in text.split("\n"):
 			if ":" not in line:
 				continue
@@ -117,7 +128,7 @@ class PhysicalTest(Document):
 			normalized_param = param.lower().strip()
 			# match ignoring capital/small
 			if normalized_param not in required_params_lower:
-				continue
+				continue			# Skip if already added
 			if normalized_param in added_params:
 				continue
 			uom = ""
@@ -134,7 +145,8 @@ class PhysicalTest(Document):
 			self.append("test_details_physical", {
 				"parameter": param,
 				"value": val,
-				"uom": uom
+				"uom": uom,
+    			"from_pdf": 1
 			})
 			added_params.add(normalized_param)
 
@@ -150,6 +162,7 @@ class PhysicalTest(Document):
 		file_content = file_doc.get_content()
 		wb = load_workbook(filename=io.BytesIO(file_content), data_only=True)
 		sheet = wb.active
+		self.test_details_physical = [row for row in self.test_details_physical if not getattr(row, "from_excel", 0)]
 		existing = {row.parameter: row for row in self.test_details_physical if row.parameter}
 		for row in sheet.iter_rows(min_row=2, values_only=True):
 			if not row or len(row) < 2:
@@ -167,7 +180,13 @@ class PhysicalTest(Document):
 				existing[param].max_range = max_range
 				existing[param].uom = uom
 			else:
-				self.append("test_details_physical", {"parameter": param, "value": val, "min_range": min_range, "max_range": max_range ,"uom": uom})
+				self.append("test_details_physical", {
+                    "parameter": param, 
+                    "value": val, 
+                    "min_range": min_range, 
+                    "max_range": max_range ,
+                    "uom": uom,
+                    "from_excel": 1})
 #*************************************************************************************************
 	@frappe.whitelist()
 	def add_data(self):
