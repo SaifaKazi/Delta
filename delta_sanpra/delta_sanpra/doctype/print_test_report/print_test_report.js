@@ -4,17 +4,15 @@
 frappe.ui.form.on("Print Test Report", {
 // refresh(frm) {
 // },
-get_data(frm) {
-    frappe.call({
-        method: "get_data",
-        doc: frm.doc,
-        callback: function (r) {
-        if (!r.exc) {
-        frm.refresh_field("items");
-        // frappe.msgprint("Data Loaded Successfully");
-        }
-        }
+    get_data(frm) {
+        frappe.call({
+            method: "get_data",
+            doc: frm.doc,
+            callback: function (r) {
+                if (!r.exc) {
+                    frm.refresh_field("items");
+                }
+            }
         });
     },
-
 });

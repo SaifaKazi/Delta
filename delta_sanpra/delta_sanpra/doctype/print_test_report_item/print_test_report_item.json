@@ -6,9 +6,10 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "test_group",
+  "form_name",
   "test_group_id",
   "status",
+  "test_group",
   "column_break_qhol",
   "customer_name",
   "challan_no",
@@ -23,18 +24,11 @@
  ],
  "fields": [
   {
-   "fieldname": "test_group",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Test Group",
-   "options": "DocType"
-  },
-  {
    "fieldname": "test_group_id",
    "fieldtype": "Dynamic Link",
    "in_list_view": 1,
    "label": "Test Group Id",
-   "options": "test_group"
+   "options": "form_name"
   },
   {
    "fieldname": "customer_name",
@@ -106,13 +100,27 @@
   {
    "fieldname": "column_break_ttth",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "form_name",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Form Name",
+   "options": "DocType"
+  },
+  {
+   "fieldname": "test_group",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Test Group",
+   "options": "Test Group"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2026-03-02 12:40:14.613838",
+ "modified": "2026-03-04 11:40:46.480077",
  "modified_by": "Administrator",
  "module": "Delta Sanpra",
  "name": "Print Test Report Item",

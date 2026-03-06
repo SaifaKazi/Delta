@@ -11,8 +11,8 @@
   "test_method",
   "column_break_dypw",
   "rate",
-  "is_default",
   "is_standard",
+  "customer_specified",
   "naming_series",
   "customer_name"
  ],
@@ -45,12 +45,6 @@
    "reqd": 1
   },
   {
-   "default": "0",
-   "fieldname": "is_default",
-   "fieldtype": "Check",
-   "label": "Is Default"
-  },
-  {
    "fieldname": "naming_series",
    "fieldtype": "Select",
    "hidden": 1,
@@ -75,12 +69,18 @@
    "fieldname": "is_standard",
    "fieldtype": "Check",
    "label": "Is Standard"
+  },
+  {
+   "default": "0",
+   "fieldname": "customer_specified",
+   "fieldtype": "Check",
+   "label": "Customer Specified"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-03-03 10:25:19.107910",
+ "modified": "2026-03-04 12:28:43.152262",
  "modified_by": "Administrator",
  "module": "Delta Sanpra",
  "name": "Test Description",

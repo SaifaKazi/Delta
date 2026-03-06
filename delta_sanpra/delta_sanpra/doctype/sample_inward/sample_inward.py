@@ -141,7 +141,7 @@ class SampleInward(Document):
                     other_doc.challan_date = self.challan_date
                     other_doc.discipline = row.discipline
                     other_doc.group = row.group
-                    other_doc.mrn_no = self.mrn_no
+                    other_doc.mrn_no = self.name
 
                     # Witness
                     if self.client:
@@ -152,9 +152,8 @@ class SampleInward(Document):
                     if existing:
                         other_doc.save(ignore_permissions=True, ignore_version=True)
                     else:
-                        other_doc.save()
-        
-#**************************************metallography_tests***********************************************
+                        other_doc.save()   
+#*****************************************metallography_tests************************************
     def create_metallography_tests(self):
         for row in self.test_on_sample:
             if row.test_group == "Metallography":
@@ -184,7 +183,7 @@ class SampleInward(Document):
                     meta_doc.challan_date = self.challan_date
                     meta_doc.discipline = row.discipline
                     meta_doc.group = row.group
-                    meta_doc.mrn_no = self.mrn_no
+                    meta_doc.mrn_no = self.name
 
                     # Witness
                     if self.client:
@@ -226,7 +225,7 @@ class SampleInward(Document):
                     corro_doc.challan_date = self.challan_date
                     corro_doc.discipline = row.discipline
                     corro_doc.group = row.group
-                    corro_doc.mrn_no = self.mrn_no
+                    corro_doc.mrn_no = self.name
 
                     # Witness
                     if self.client:
@@ -239,7 +238,7 @@ class SampleInward(Document):
                     else:
                         corro_doc.save()
 
-#***********************************Chemical Test*********************************************
+#******************************************Chemical Test*********************************************
     def create_chemical_tests(self):
         for row in self.test_on_sample:
             if row.test_group == "Chemical":
@@ -294,7 +293,7 @@ class SampleInward(Document):
                     chem_doc.challan_date = self.challan_date
                     chem_doc.discipline = row.discipline
                     chem_doc.group = row.group
-                    chem_doc.mrn_no = self.mrn_no
+                    chem_doc.mrn_no = self.name
 
                     # Witness
                     if self.client:
@@ -306,17 +305,40 @@ class SampleInward(Document):
                     test_method_doc = frappe.get_doc("Test Method", row.test_method)
                     item_doc = frappe.get_doc("Item", row.material_specification)
 
+                    # Item parameters dictionary
+                    item_params = {d.parameter: d for d in item_doc.custom_chemical_detail}
+
+                    added_params = set()
+
+                    # 1️⃣ Add parameters from Test Method
                     for chem in test_method_doc.chemical_details:
+
                         td = chem_doc.append("test_details_chemical", {
                             "test_method": row.test_method,
                             "parameter": chem.parameter,
                             "method_min_range": chem.min_range,
                             "method_max_range": chem.max_range
                         })
-                        for item_chem in item_doc.custom_chemical_detail:
-                            if item_chem.parameter == chem.parameter:
-                                td.min_range = item_chem.min_range
-                                td.max_range = item_chem.max_range
+
+                        if chem.parameter in item_params:
+                            item_chem = item_params[chem.parameter]
+                            td.min_range = item_chem.min_range
+                            td.max_range = item_chem.max_range
+
+                        added_params.add(chem.parameter)
+
+
+                    # 2️⃣ Add extra parameters from Item (जो Test Method में नहीं हैं)
+                    for item_chem in item_doc.custom_chemical_detail:
+                        if item_chem.parameter not in added_params:
+                            chem_doc.append("test_details_chemical", {
+                                "test_method": row.test_method,
+                                "parameter": item_chem.parameter,
+                                "min_range": item_chem.min_range,
+                                "max_range": item_chem.max_range
+                            })
+
+                                
                     if existing:
                         chem_doc.save(ignore_permissions=True, ignore_version=True)
                     else:
@@ -352,7 +374,7 @@ class SampleInward(Document):
                     phys_doc.challan_date = self.challan_date
                     phys_doc.discipline = row.discipline
                     phys_doc.group = row.group
-                    phys_doc.mrn_no = self.mrn_no
+                    phys_doc.mrn_no = self.name
 
                     # Witness
                     if self.client:
@@ -390,23 +412,31 @@ class SampleInward(Document):
                         continue
                     #**************************************************************
                     test_method_doc = frappe.get_doc("Test Method", sample_row.test_method)
-                    test_desc = frappe.db.get_value("Test Description",
-                        {
-                            "customer_name": self.customer,
-                            "test_group": test_method_doc.test_group,
-                            "test_method": sample_row.test_method,
-                            "is_default": 1
-                        },["name", "rate"],as_dict=True
-                    )
-                    if not test_desc:
-                        test_desc = frappe.db.get_value("Test Description",
+                    test_desc = None
+                    if self.customer:
+                        test_desc = frappe.db.get_value(
+                            "Test Description",
                             {
                                 "customer_name": self.customer,
                                 "test_group": test_method_doc.test_group,
                                 "test_method": sample_row.test_method,
-                                "is_standard": 1
-                            },["name", "rate"],as_dict=True
+                                "customer_specified": 1
+                            },
+                            ["name", "rate"],
+                            as_dict=True
                         )
+                    if not test_desc:
+                        test_desc = frappe.db.get_value(
+                            "Test Description",
+                            {
+                                "test_group": test_method_doc.test_group,
+                                "test_method": sample_row.test_method,
+                                "is_standard": 1
+                            },
+                            ["name", "rate"],
+                            as_dict=True
+                        )
+
                     if test_desc:
                         test_description_name = test_desc["name"]
                         des_price = test_desc["rate"]

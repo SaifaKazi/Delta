@@ -6,30 +6,16 @@ from frappe.model.document import Document
 from frappe.utils import get_link_to_form
 class TestDescription(Document):
     def before_save(self):
-        if self.is_default == 1 and self.is_standard == 1:
-            frappe.throw("A record cannot be both 'Default' and 'Standard' at the same time.")
-        if self.is_default == 0 and self.is_standard == 0:
-            frappe.throw("A record must be either 'Default' or 'Standard'.")
-            
-        if self.is_default == 1 and self.is_standard == 0:
-            existing = frappe.db.get_value("Test Description",
-                {
-                    "test_description": self.test_description,
-                    "test_method": self.test_method,
-                    "test_group": self.test_group,
-                    "customer_name": self.customer_name,
-                    "is_default": 1,    
-                    "name": ["!=", self.name],          
-                },
-            )
-            # Agar aisa record mil gaya to error throw
-            if existing:
-                    frappe.throw(
-                        f"'Is Default' is already enabled in {get_link_to_form('Test Description', existing)}."
-                    )
+        # Only one must be selected
+        if self.customer_specified == self.is_standard:
+            frappe.throw("Select either 'Default' or 'Standard'.")
 
-#***************************************************************************************************
-        if self.is_standard == 1 and self.is_default == 0:
+        # If Default → Customer Mandatory
+        if self.customer_specified and not self.customer_name:
+            frappe.throw("Customer Name is mandatory when 'Customer Specified' is enabled.")
+
+        # ================= DEFAULT CHECK =================
+        if self.customer_specified:
             existing = frappe.db.get_value(
                 "Test Description",
                 {
@@ -37,11 +23,29 @@ class TestDescription(Document):
                     "test_method": self.test_method,
                     "test_group": self.test_group,
                     "customer_name": self.customer_name,
-                    "is_standard": 1,
-                    # already checkmark hai to ignore karne ke liye.
-                    "name": ["!=", self.name],             
+                    "customer_specified": 1,
+                    "name": ["!=", self.name],
                 },
             )
+
+            if existing:
+                frappe.throw(
+                    f"'Is Default' is already enabled in {get_link_to_form('Test Description', existing)}."
+                )
+
+        # ================= STANDARD CHECK =================
+        if self.is_standard:
+            existing = frappe.db.get_value(
+                "Test Description",
+                {
+                    "test_description": self.test_description,
+                    "test_method": self.test_method,
+                    "test_group": self.test_group,
+                    "is_standard": 1,
+                    "name": ["!=", self.name],
+                },
+            )
+
             if existing:
                 frappe.throw(
                     f"'Is Standard' is already enabled in {get_link_to_form('Test Description', existing)}."

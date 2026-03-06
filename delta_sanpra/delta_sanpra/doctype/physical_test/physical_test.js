@@ -79,9 +79,14 @@ frappe.ui.form.on("Physical Test", {
     },
     pdf_file: function(frm) {
         if (!frm.doc.pdf_file) {
-            frm.clear_table("test_details_physical");
+            // frm.clear_table("test_details_physical");
             frm.refresh_field("test_details_physical");
         }
+    },
+    test_details_physical_remove: function(frm, cdt, cdn) {
+        let row = locals[cdt][cdn];
+        if (!frm.doc.deleted_pdf_rows) frm.doc.deleted_pdf_rows = [];
+        frm.doc.deleted_pdf_rows.push(row.parameter.toLowerCase());
     }
 });
 function set_test_method_filter(frm) {
