@@ -10,13 +10,14 @@ import io
 
 class PhysicalTest(Document):
 	def before_save(self):
-    # Process PDF if attached
-		if self.pdf_file:
+		# Process PDF only if table empty
+		if self.pdf_file and not self.test_details_physical:
 			self.read_pdf()
-		
-		# Process Excel if attached
+
+		# Process Excel
 		if self.excel_file:
 			self.upload_excel_file()
+
 	@frappe.whitelist()
 	def read_pdf(self):
 		# Always clear table first
@@ -117,7 +118,7 @@ class PhysicalTest(Document):
 			new_table.append(row)
 			added_params.add(row.parameter.lower().strip())
 
-		self.test_details_physical = new_table
+		self.set("test_details_physical", new_table)
 
 		for line in text.split("\n"):
 			if ":" not in line:
@@ -232,12 +233,14 @@ class PhysicalTest(Document):
 #**************************************************************************
 	@frappe.whitelist()
 	def set_ulr_counter(self):
-     	# frappe.msgprint("Setting ULR Counter")
+		if self.ulr_no:
+			return
 		company_name = "DELTAA METALLIX SOLUTIONS PRIVATE LIMITED"
 		last = frappe.db.get_value("Company", company_name, "custom_ulr_counter") or 0
 		count = int(last) + 1
 		frappe.db.set_value("Company", company_name, "custom_ulr_counter", count)
 		return count
+
 #**************************************************************************
 	@frappe.whitelist()
 	def get_highlight_colors(self):
