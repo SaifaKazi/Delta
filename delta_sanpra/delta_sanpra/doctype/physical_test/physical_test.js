@@ -5,8 +5,10 @@ frappe.ui.form.on("Physical Test", {
 	refresh(frm) {
         apply_highlight_from_backend(frm);
         set_test_method_filter(frm);
-        if (!frm.is_new()) {
+        if (!frm.is_new() && !frm.doc.ulr_no) {
             frm.add_custom_button("Generate ULR", function () {
+                let btn = $(this);
+                btn.prop("disabled", true);
                 frm.call({
                     method: "set_ulr_counter",
                     doc: frm.doc,
@@ -18,6 +20,7 @@ frappe.ui.form.on("Physical Test", {
                             let newCode = prefix + count + suffix;
                             frm.set_value("ulr_no", newCode).then(() => {
                                 frappe.msgprint("ULR No Generated Successfully");
+                                // frm.save();
                             });
                         }
                     }
@@ -83,11 +86,6 @@ frappe.ui.form.on("Physical Test", {
             frm.refresh_field("test_details_physical");
         }
     },
-    test_details_physical_remove: function(frm, cdt, cdn) {
-        let row = locals[cdt][cdn];
-        if (!frm.doc.deleted_pdf_rows) frm.doc.deleted_pdf_rows = [];
-        frm.doc.deleted_pdf_rows.push(row.parameter.toLowerCase());
-    }
 });
 function set_test_method_filter(frm) {
     frm.set_query('test_method', function () {
