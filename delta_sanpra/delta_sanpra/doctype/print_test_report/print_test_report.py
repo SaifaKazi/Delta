@@ -70,6 +70,7 @@ class PrintTestReport(Document):
     
     @frappe.whitelist()
     def check_non_enbl_status_chemical(self):
+        # if self.select_print_format == "select_print_format":
         for item in self.items:
             if item.form_name == "Chemical Test":
                 chemical_test_doc = frappe.get_doc("Chemical Test", item.test_group_id)
@@ -81,6 +82,7 @@ class PrintTestReport(Document):
         return
     @frappe.whitelist()
     def check_non_enbl_status_physical(self):
+        # if self.select_print_format == "select_print_format":
         for item in self.items:
             if item.form_name == "Physical Test":
                 physical_test_doc = frappe.get_doc("Physical Test", item.test_group_id)

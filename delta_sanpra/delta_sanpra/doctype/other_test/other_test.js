@@ -32,3 +32,28 @@ frappe.ui.form.on("Other Test", {
         };
     },
 });
+frappe.ui.form.on('Test Parameter Details', {
+    observed_value: function(frm, cdt, cdn) {
+        calculate_compressive_avg(frm);
+    },
+    avg: function(frm, cdt, cdn) {
+        calculate_compressive_avg(frm);
+    },
+    value: function(frm, cdt, cdn) {
+        apply_highlight_from_backend(frm, cdt, cdn);
+    }
+});
+function calculate_compressive_avg(frm) {
+    let total = 0;
+    let count = 0;
+    (frm.doc.test_parameter_details || []).forEach(function(row) {
+        if (row.avg == 1 
+            // && test_parameters === "Compressive Strength N/mm2" 
+            && row.observed_value) {
+            total += parseFloat(row.observed_value);
+            count++;
+        }
+    });
+    let average = count ? (total / count) : 0;
+    frm.set_value("average_compressive_strength", average);
+}

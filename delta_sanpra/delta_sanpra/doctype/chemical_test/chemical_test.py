@@ -43,36 +43,29 @@ class ChemicalTest(Document):
 		# frappe.msgprint(str(parameters))
 		return parameters
 	#*************************************************************************************
-	# @frappe.whitelist()
-	# def get_minmax_range(self, test_method=None, parameter=None, material_specification=None):
-	# 	data = {}
-	# 	# Only if test_method provided
-	# 	if test_method:
-	# 		test_method_doc = frappe.get_doc("Test Method", test_method)
-	# 		for row in test_method_doc.chemical_details:
-	# 			if row.parameter == parameter:
-	# 				data["method_min_range"] = row.min_range
-	# 				data["method_max_range"] = row.max_range
-	# 				break
-	# 	# Material Specification always check
-	# 	if material_specification:
-	# 		material_spec_doc = frappe.get_doc("Item", material_specification)
-	# 		for row in material_spec_doc.custom_chemical_detail:
-	# 			if row.parameter == parameter:
-	# 				data["min_range"] = row.min_range
-	# 				data["max_range"] = row.max_range
-	# 				break
-	# 	return [data]
+	@frappe.whitelist()
+	def get_minmax_range(self, test_method=None, parameter=None, material_specification=None):
+		data = {}
+		# Only if test_method provided
+		if test_method:
+			test_method_doc = frappe.get_doc("Test Method", test_method)
+			for row in test_method_doc.chemical_details:
+				if row.parameter == parameter:
+					data["method_min_range"] = row.min_range
+					data["method_max_range"] = row.max_range
+					break
+		# Material Specification always check
+		if material_specification:
+			material_spec_doc = frappe.get_doc("Item", material_specification)
+			for row in material_spec_doc.custom_chemical_detail:
+				if row.parameter == parameter:
+					data["min_range"] = row.min_range
+					data["max_range"] = row.max_range
+					break
+		return [data]
 
 
 #**************************************************************************
-	# @frappe.whitelist()
-	# def set_ulr_counter(self):
-	# 	# frappe.msgprint("Setting ULR Counter")
-	# 	last = frappe.db.get_value("Company", company_name, "custom_ulr_counter") or "0"
-	# 	count = int(last) + 1 
-	# 	frappe.db.set_value("Company", company_name, "custom_ulr_counter", str(count))  
-  
 	@frappe.whitelist()
 	def set_ulr_counter(self):
 		if self.ulr_no:
@@ -110,9 +103,11 @@ class ChemicalTest(Document):
 					# Status Calculation
 					if row.value and row.method_min_range and row.method_max_range:
 						value = float(row.value)
-						min_range = float(row.method_min_range)
-						max_range = float(row.method_max_range)
-						if value < min_range or value > max_range:
+						method_min_range = float(row.method_min_range)
+						method_max_range = float(row.method_max_range)
+						if method_min_range and method_max_range == 0:
+							row.status = "NABL"
+						if value < method_min_range or value > method_max_range:
 							row.status = "NON NABL"
 						else:
 							row.status = "NABL"

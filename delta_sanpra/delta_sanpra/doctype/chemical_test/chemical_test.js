@@ -126,46 +126,46 @@ frappe.ui.form.on("Test Details", {
             }
         });
     },
-    // parameter(frm, cdt, cdn) {
-    // let child = locals[cdt][cdn];
+    parameter(frm, cdt, cdn) {
+    let child = locals[cdt][cdn];
 
-    // frappe.call({
-    //     method: "get_minmax_range",
-    //     doc: frm.doc,
-    //     args: {
-    //         test_method: child.test_method,
-    //         parameter: child.parameter,
-    //         material_specification: frm.doc.material_specification
-    //     },
-    //     callback: function (r) {
+    frappe.call({
+        method: "get_minmax_range",
+        doc: frm.doc,
+        args: {
+            test_method: child.test_method,
+            parameter: child.parameter,
+            material_specification: frm.doc.material_specification
+        },
+        callback: function (r) {
 
-    //         if (r.message && r.message.length > 0) {
+            if (r.message && r.message.length > 0) {
 
-    //             let data = r.message[0] || {};
+                let data = r.message[0] || {};
 
-    //             frappe.model.set_value(cdt, cdn, "method_min_range", data.method_min_range || "");
-    //             frappe.model.set_value(cdt, cdn, "method_max_range", data.method_max_range || "");
-    //             frappe.model.set_value(cdt, cdn, "min_range", data.min_range || "");
-    //             frappe.model.set_value(cdt, cdn, "max_range", data.max_range || "");
+                frappe.model.set_value(cdt, cdn, "method_min_range", data.method_min_range || "");
+                frappe.model.set_value(cdt, cdn, "method_max_range", data.method_max_range || "");
+                frappe.model.set_value(cdt, cdn, "min_range", data.min_range || "");
+                frappe.model.set_value(cdt, cdn, "max_range", data.max_range || "");
 
-    //             if (child.value) {
+                if (child.value) {
 
-    //                 let val = parseFloat(child.value);
+                    let val = parseFloat(child.value);
 
-    //                 let min = parseFloat(data.min_range ?? data.method_min_range ?? 0);
-    //                 let max = parseFloat(data.max_range ?? data.method_max_range ?? 0);
+                    let min = parseFloat(data.min_range ?? data.method_min_range ?? 0);
+                    let max = parseFloat(data.max_range ?? data.method_max_range ?? 0);
 
-    //                 if (!isNaN(val) && !isNaN(min) && !isNaN(max)) {
-    //                     let status = (val < min || val > max) ? "NON NABL" : "NABL";
-    //                     frappe.model.set_value(cdt, cdn, "status", status);
-    //                 }
-    //             }
+                    if (!isNaN(val) && !isNaN(min) && !isNaN(max)) {
+                        let status = (val < min || val > max) ? "NON NABL" : "NABL";
+                        frappe.model.set_value(cdt, cdn, "status", status);
+                    }
+                }
 
-    //             frm.refresh_field("test_details_chemical");
-    //         }
-    //     }
-    // });
-// }
+                frm.refresh_field("test_details_chemical");
+            }
+        }
+    });
+}
 
 });
 function apply_highlight_from_backend(frm) {
