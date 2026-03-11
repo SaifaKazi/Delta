@@ -2,8 +2,6 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on("Print Test Report", {
-// refresh(frm) {
-// },
     get_data(frm) {
         frappe.call({
             method: "get_data",

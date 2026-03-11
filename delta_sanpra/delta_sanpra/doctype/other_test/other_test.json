@@ -15,6 +15,7 @@
   "challan_date",
   "test_description",
   "column_break_gnmj",
+  "ulr_no",
   "mrn_no",
   "heat_number",
   "is_print",
@@ -437,13 +438,18 @@
    "fieldname": "mrn_no",
    "fieldtype": "Data",
    "label": "MRN No"
+  },
+  {
+   "fieldname": "ulr_no",
+   "fieldtype": "Data",
+   "label": "ULR No."
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-03-02 14:08:00.314731",
+ "modified": "2026-03-10 18:42:16.352415",
  "modified_by": "Administrator",
  "module": "Delta Sanpra",
  "name": "Other Test",
